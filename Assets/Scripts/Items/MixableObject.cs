@@ -8,6 +8,7 @@ public class MixableObject : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+
 		if (other.tag == "InstrumentDropZone" && other.TryGetComponent<InstrumentDropZone>(out InstrumentDropZone instrumentDropZone))
 		{
 			_instrumentDropZones.Add(instrumentDropZone);
