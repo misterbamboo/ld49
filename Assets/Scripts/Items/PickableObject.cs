@@ -3,6 +3,8 @@ using UnityEngine;
 public class PickableObject : MonoBehaviour
 {
 	[SerializeField] private Rigidbody _rigibbody;
+	[SerializeField] private SnappableObject _snappableObject;
+	public bool IsPickedUp => _isPickedUp;
 	private bool _isPickedUp;
 
 	public void Pickup(Transform newParent)
@@ -29,6 +31,11 @@ public class PickableObject : MonoBehaviour
 			_rigibbody.useGravity = true;
 
 			transform.parent = null;
+
+			if (_snappableObject != null)
+			{
+				_snappableObject.Snap();
+			}
 		}
 	}
 }

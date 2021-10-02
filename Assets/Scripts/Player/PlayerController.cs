@@ -1,27 +1,59 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+	public event Action onDied;
 	[SerializeField] private float _movementSpeed = 7f;
 	[SerializeField] private float _rotationSpeed = 15f;
+	[SerializeField] private float _maxTimeToLive = 20f;
 	[SerializeField] private Rigidbody _rigidbody;
 	[SerializeField] private InputManager _inputManager;
 	[SerializeField] private PlayerPickup _playerPickup;
 
 	private Vector3 _moveDirection;
 	private Transform _cameraObject;
+	private float _timeToLive;
 
 	private void Awake()
 	{
 		_cameraObject = Camera.main.transform;
 		_inputManager.OnPickupInput += OnPickupInputHandler;
+
+		_timeToLive = _maxTimeToLive;
 	}
 
 	private void Update()
 	{
 		HandleMovement();
 		HandleRotation();
+
+		if (!IsDead)
+		{
+			CheckLife();
+		}
 	}
+
+	private void CheckLife()
+	{
+		ReduceTimeToLive();
+		if (IsDead)
+		{
+			DieEvent();
+		}
+	}
+
+	private void DieEvent()
+	{
+		onDied?.Invoke();
+	}
+
+	private void ReduceTimeToLive()
+	{
+		_timeToLive -= Time.deltaTime;
+	}
+
+	private bool IsDead => _timeToLive <= 0;
 
 	private void HandleMovement()
 	{

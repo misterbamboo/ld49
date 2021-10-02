@@ -1,22 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOverController : MonoBehaviour
 {
-    private void Start()
-    {
-        Flower.Instance.onDied += Flower_onDied;
-        this.gameObject.SetActive(false);
-    }
+	private void Start()
+	{
+		SubscribeEvents();
+		gameObject.SetActive(false);
+	}
 
-    private void Flower_onDied()
-    {
-        GameOver();
-    }
+	private void OnDestroy()
+	{
+		UnsubscribeEvents();
+	}
 
-    void GameOver()
-    {
-        this.gameObject.SetActive(true);
-    }
+	private void SubscribeEvents()
+	{
+		if (Flower.Instance != null)
+		{
+			Flower.Instance.onDied += Flower_onDied;
+		}
+		foreach (PlayerController player in GameManager.Instance.Players)
+		{
+			player.onDied += GameOver;
+		}
+	}
+
+	private void UnsubscribeEvents()
+	{
+		if (Flower.Instance != null)
+		{
+			Flower.Instance.onDied -= Flower_onDied;
+		}
+		foreach (PlayerController player in GameManager.Instance.Players)
+		{
+			player.onDied -= GameOver;
+		}
+	}
+
+	private void Flower_onDied()
+	{
+		GameOver();
+	}
+
+	private void GameOver()
+	{
+		gameObject.SetActive(true);
+	}
 }
