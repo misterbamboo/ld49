@@ -23,11 +23,11 @@ namespace Assets.Chemicals
 
             // On consume on player
             var mixResult1 = ChemicalMixes.Mix(keepElement1, keepElement2);
-            if (mixResult1.PlayerEffect == PlayerEffects.BestLifePotion) ;
+            if (mixResult1.GetPlayerEffect() == PlayerEffects.BestLifePotion) ;
 
             // On consume on flower
             var mixResult2 = ChemicalMixes.Mix(keepElement1, keepElement2);
-            if (mixResult2.FlowerEffect == FlowerEffects.ExplosionWhenDrink) ;
+            if (mixResult2.GetFlowerEffect() == FlowerEffects.ExplosionWhenDrink) ;
         }
     }
 }

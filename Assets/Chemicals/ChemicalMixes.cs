@@ -18,7 +18,7 @@ namespace Assets.Chemicals
 
         [SerializeField] private ChemicalDefinitionScriptableObject[] chemicalDefinition;
 
-        public static ChemicalDefinitionScriptableObject Mix(ChemicalElements first, ChemicalElements second)
+        public static IChemicalMixReaction Mix(ChemicalElements first, ChemicalElements second)
         {
             return ChemicalMixes
                 .Instance

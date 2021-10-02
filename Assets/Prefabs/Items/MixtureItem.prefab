@@ -1,6 +1,30 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6104509187074887006
+--- !u!114 &3860055903622639676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2191947189312931793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e805d92c3fcaa41adf7b1a6559bf2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chemicalElementMaterials:
+  - chemicalElement: 1
+    material: {fileID: 2100000, guid: 573b9e6b034996b4fa47d0651a186f92, type: 2}
+  - chemicalElement: 2
+    material: {fileID: 2100000, guid: 5468c89ba65449e4b8b9e0f26cbdfe4a, type: 2}
+  - chemicalElement: 3
+    material: {fileID: 2100000, guid: acc141d4e8c1c1b4395d99291abe7614, type: 2}
+  - chemicalElement: 4
+    material: {fileID: 2100000, guid: c2113cf8135d8ce47b8a33e694c99acc, type: 2}
+  - chemicalElement: 5
+    material: {fileID: 2100000, guid: 9a0b5e68ef2a73342a04bfc13c777ca6, type: 2}
+  _meshRenderer: {fileID: 2191947189312931795}
+--- !u!1001 &2213277709055824789
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,12 +33,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 62056450850673732, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
       propertyPath: m_Name
-      value: PurpleItem
+      value: MixtureItem
       objectReference: {fileID: 0}
-    - target: {fileID: 62056450850673734, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5468c89ba65449e4b8b9e0f26cbdfe4a, type: 2}
     - target: {fileID: 62056450850673736, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -59,13 +79,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7490479207549473703, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
-      propertyPath: chemicalElement
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7490479207549473703, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
-      propertyPath: _chemicalElement
-      value: 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7490479207549473703, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
+--- !u!1 &2191947189312931793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 62056450850673732, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
+  m_PrefabInstance: {fileID: 2213277709055824789}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2191947189312931795 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 62056450850673734, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
+  m_PrefabInstance: {fileID: 2213277709055824789}
+  m_PrefabAsset: {fileID: 0}
