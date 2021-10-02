@@ -8,6 +8,7 @@ TagManager:
   - Flower
   - SnappableSurface
   - InstrumentDropZone
+  - Instrument
   layers:
   - Default
   - TransparentFX

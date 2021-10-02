@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 62056450850673737}
   - component: {fileID: 62056450850673738}
   - component: {fileID: -6608210560837869104}
-  - component: {fileID: 7490479207549473703}
+  - component: {fileID: -6634561882985441191}
   m_Layer: 0
   m_Name: BaseItem
   m_TagString: PickableObject
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigibbody: {fileID: 62056450850673737}
   _snappableObject: {fileID: 0}
-  _mixableObject: {fileID: -6608210560837869104}
+  _mixableObject: {fileID: -6634561882985441191}
 --- !u!114 &-6608210560837869104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,3 +159,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _chemicalMixturePrefab: {fileID: 2191947189312931793, guid: 7fd6037158d7f5743972a033bdef9315, type: 3}
   _chemicalElement: 0
+--- !u!114 &-6634561882985441191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62056450850673732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1354a2e5bd1ac0940a477ad8188db162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

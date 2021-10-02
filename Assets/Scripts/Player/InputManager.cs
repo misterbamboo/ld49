@@ -5,6 +5,7 @@ using static UnityEngine.InputSystem.InputAction;
 public class InputManager : MonoBehaviour
 {
 	public event Action OnPickupInput;
+	public event Action OnUseInput;
 	public float HorizontalInput => _horizontalInput;
 	private float _horizontalInput = 0f;
 	public float VerticalInput => _verticalInput;
@@ -22,6 +23,7 @@ public class InputManager : MonoBehaviour
 
 			_playerInputs.Player.Movement.performed += OnMovementInputHandler;
 			_playerInputs.Player.Pickup.performed += OnPickupInputHandler;
+			_playerInputs.Player.Use.performed += OnUseInputHandler;
 		}
 
 		_playerInputs.Enable();
@@ -43,5 +45,10 @@ public class InputManager : MonoBehaviour
 	public void OnPickupInputHandler(CallbackContext context)
 	{
 		OnPickupInput?.Invoke();
+	}
+
+	public void OnUseInputHandler(CallbackContext context)
+	{
+		OnUseInput?.Invoke();
 	}
 }

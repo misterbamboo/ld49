@@ -9,4 +9,14 @@ public class CookingPot : InstrumentBase
 	{
 		_elements.Add(element);
 	}
+
+	public override void StopUsing()
+	{
+		throw new System.NotImplementedException();
+	}
+
+	public override void Use()
+	{
+		throw new System.NotImplementedException();
+	}
 }
