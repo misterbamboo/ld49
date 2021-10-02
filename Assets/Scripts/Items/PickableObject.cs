@@ -3,6 +3,7 @@ using UnityEngine;
 public class PickableObject : MonoBehaviour
 {
 	[SerializeField] private Rigidbody _rigibbody;
+	public bool IsPickedUp => _isPickedUp;
 	private bool _isPickedUp;
 
 	public void Pickup(Transform newParent)
