@@ -32,8 +32,8 @@ public class SnappableObject : MonoBehaviour
 		_rigibbody.isKinematic = true;
 		_rigibbody.useGravity = false;
 
+		transform.rotation = Quaternion.identity;
 		transform.position = closestSnappableSurface.transform.position + _snapOffset;
-		transform.SetParent(closestSnappableSurface.transform);
 	}
 
 	private SnappableSurface FindClosestSnappableSurface()

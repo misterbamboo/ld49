@@ -7,6 +7,10 @@ using UnityEngine;
 public interface IChemicalItem
 {
     public ChemicalElements ChemicalElement { get; }
+
+    void FlagAsAlreadyReact();
+
+    bool HasAlreadyReact();
 }
 
 public class ChemicalItem : MonoBehaviour, IChemicalItem
@@ -18,6 +22,16 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
     private ChemicalElements _selectedElement;
 
     public ChemicalElements ChemicalElement => _selectedElement;
+
+    private bool _alreadyReact;
+    public void FlagAsAlreadyReact()
+    {
+        _alreadyReact = true;
+    }
+    public bool HasAlreadyReact()
+    {
+        return _alreadyReact;
+    }
 
     private void Start()
     {
@@ -48,7 +62,13 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
     {
         if (collision.gameObject.TryGetComponent(out IChemicalItem otherChemical))
         {
-            if (React(ChemicalElement, otherChemical.ChemicalElement))
+            var currentChemical = GetComponent<IChemicalItem>();
+            if (currentChemical.HasAlreadyReact())
+            {
+                return;
+            }
+
+            if (React(currentChemical, otherChemical))
             {
                 Destroy(collision.gameObject);
                 Destroy(gameObject);
@@ -56,14 +76,17 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
         }
     }
 
-    private bool React(ChemicalElements firstChemical, ChemicalElements secondChemical)
+    private bool React(IChemicalItem firstChemical, IChemicalItem secondChemical)
     {
-        var reaction = ChemicalMixes.Mix(firstChemical, secondChemical);
+        var reaction = ChemicalMixes.Mix(firstChemical.ChemicalElement, secondChemical.ChemicalElement);
         if (reaction == null)
         {
             Debug.LogWarning($"No reaction defined for chemical : {firstChemical} & {secondChemical}");
             return false;
         }
+
+        firstChemical.FlagAsAlreadyReact();
+        secondChemical.FlagAsAlreadyReact();
 
         if (reaction.HasInstantEffect())
         {

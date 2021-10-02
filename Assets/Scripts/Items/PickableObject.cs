@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class PickableObject : MonoBehaviour
 {
 	[SerializeField] private Rigidbody _rigibbody;
 	[SerializeField] private SnappableObject _snappableObject;
+	[SerializeField] private MixableObject _mixableObject;
 	public bool IsPickedUp => _isPickedUp;
 	private bool _isPickedUp;
 
@@ -31,8 +33,11 @@ public class PickableObject : MonoBehaviour
 			_rigibbody.useGravity = true;
 
 			transform.parent = null;
-
-			if (_snappableObject != null)
+			if (_mixableObject != null)
+			{
+				_mixableObject.Mix(this);
+			}
+			else if (_snappableObject != null)
 			{
 				_snappableObject.Snap();
 			}

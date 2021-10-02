@@ -29,6 +29,7 @@ public class PlayerPickup : MonoBehaviour
 		if (_pickedUpObject != null)
 		{
 			_pickedUpObject.Drop();
+			_pickableObjects.Remove(_pickedUpObject);
 			_pickedUpObject = null;
 			return;
 		}
@@ -46,14 +47,26 @@ public class PlayerPickup : MonoBehaviour
 		PickableObject closestPickableObject = null;
 		float minDist = Mathf.Infinity;
 
+		List<PickableObject> objectsToRemoved = new List<PickableObject>();
+
 		foreach (PickableObject pickableObject in _pickableObjects)
 		{
+			if (pickableObject == null)
+			{
+				objectsToRemoved.Add(pickableObject);
+				continue;
+			}
 			float dist = Vector3.Distance(pickableObject.transform.position, transform.position);
 			if (dist < minDist)
 			{
 				closestPickableObject = pickableObject;
 				minDist = dist;
 			}
+		}
+
+		foreach (PickableObject pickableObject in objectsToRemoved)
+		{
+			_pickableObjects.Remove(pickableObject);
 		}
 
 		return closestPickableObject;

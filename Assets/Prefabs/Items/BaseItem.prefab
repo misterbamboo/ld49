@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 62056450850673735}
   - component: {fileID: 62056450850673734}
   - component: {fileID: 62056450850673733}
+  - component: {fileID: -3853974394820836429}
   - component: {fileID: 62056450850673737}
   - component: {fileID: 62056450850673738}
+  - component: {fileID: -6608210560837869104}
   - component: {fileID: 7490479207549473703}
   m_Layer: 0
   m_Name: BaseItem
@@ -99,6 +101,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &-3853974394820836429
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62056450850673732}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &62056450850673737
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,7 +144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigibbody: {fileID: 62056450850673737}
   _snappableObject: {fileID: 0}
---- !u!114 &7490479207549473703
+  _mixableObject: {fileID: -6608210560837869104}
+--- !u!114 &-6608210560837869104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

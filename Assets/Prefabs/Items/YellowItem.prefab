@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6608210560837869104, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
+      propertyPath: _chemicalElement
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 62056450850673732, guid: 380fd3fdce86ad345a148e1d53a683bf, type: 3}
       propertyPath: m_Name
       value: YellowItem
