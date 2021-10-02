@@ -2,7 +2,7 @@
 {
     public enum ChemicalElements
     {
-        Unknown,
+        None,
         Blue,
         Purple,
         Green,
