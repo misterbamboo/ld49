@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Grab",
+                    "name": "Pickup",
                     "type": "Button",
                     "id": "8f72f30e-5d50-47d6-a6b5-3486cbc2518c",
                     "expectedControlType": "Button",
@@ -85,7 +85,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Grab",
+                    "action": "Pickup",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

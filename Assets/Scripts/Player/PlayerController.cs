@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private float _rotationSpeed = 15f;
 	[SerializeField] private Rigidbody _rigidbody;
 	[SerializeField] private InputManager _inputManager;
+	[SerializeField] private PlayerPickup _playerPickup;
 
 	private Vector3 _moveDirection;
 	private Transform _cameraObject;
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
 	private void Awake()
 	{
 		_cameraObject = Camera.main.transform;
+		_inputManager.OnPickupInput += OnPickupInputHandler;
 	}
 
 	private void Update()
@@ -32,7 +34,7 @@ public class PlayerController : MonoBehaviour
 		_rigidbody.velocity = _moveDirection;
 	}
 
-	public void HandleRotation()
+	private void HandleRotation()
 	{
 		Vector3 targetDirection = Vector3.zero;
 
@@ -48,5 +50,10 @@ public class PlayerController : MonoBehaviour
 		Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
 		transform.rotation = playerRotation;
+	}
+
+	private void OnPickupInputHandler()
+	{
+		_playerPickup.TogglePickup();
 	}
 }
