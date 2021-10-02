@@ -63,7 +63,7 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
         if (collision.gameObject.TryGetComponent(out IChemicalItem otherChemical))
         {
             var currentChemical = GetComponent<IChemicalItem>();
-            if (currentChemical.HasAlreadyReact())
+            if (currentChemical.HasAlreadyReact() || otherChemical.HasAlreadyReact())
             {
                 return;
             }
