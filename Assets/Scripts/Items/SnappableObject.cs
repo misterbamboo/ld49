@@ -34,6 +34,19 @@ public class SnappableObject : MonoBehaviour
 
 		transform.rotation = Quaternion.identity;
 		transform.position = closestSnappableSurface.transform.position + _snapOffset;
+
+		if (TryGetComponent<CookingPot>(out CookingPot cookingPot))
+		{
+			cookingPot.Use();
+		}
+	}
+
+	public void Unsnap()
+	{
+		if (TryGetComponent<CookingPot>(out CookingPot cookingPot))
+		{
+			cookingPot.StopUsing();
+		}
 	}
 
 	private SnappableSurface FindClosestSnappableSurface()

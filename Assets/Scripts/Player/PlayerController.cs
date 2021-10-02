@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Rigidbody _rigidbody;
 	[SerializeField] private InputManager _inputManager;
 	[SerializeField] private PlayerPickup _playerPickup;
+	[SerializeField] private PlayerInstrument _playerInstrument;
 
 	private Vector3 _moveDirection;
 	private Transform _cameraObject;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
 	{
 		_cameraObject = Camera.main.transform;
 		_inputManager.OnPickupInput += OnPickupInputHandler;
+		_inputManager.OnUseInput += OnUseInputHandler;
 
 		_timeToLive = _maxTimeToLive;
 	}
@@ -87,5 +89,10 @@ public class PlayerController : MonoBehaviour
 	private void OnPickupInputHandler()
 	{
 		_playerPickup.TogglePickup();
+	}
+
+	private void OnUseInputHandler()
+	{
+		_playerInstrument.ToggleUse();
 	}
 }

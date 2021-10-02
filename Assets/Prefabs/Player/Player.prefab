@@ -69,6 +69,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 4680003469596561744}
   _inputManager: {fileID: 4680003469596561711}
   _playerPickup: {fileID: 4680003470211969902}
+  _playerInstrument: {fileID: 2858990972850128196}
 --- !u!114 &4680003469596561711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +273,7 @@ GameObject:
   - component: {fileID: 4680003470211969900}
   - component: {fileID: 4680003470211969902}
   - component: {fileID: 4680003470211969903}
+  - component: {fileID: 2858990972850128196}
   m_Layer: 0
   m_Name: PickableObjectParent
   m_TagString: Untagged
@@ -319,3 +321,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.57, y: 2.46, z: 1}
   m_Center: {x: 0, y: 0.2, z: -0.09}
+--- !u!114 &2858990972850128196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4680003470211969901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81bb9e200364c34428bb8019ea6b806c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
