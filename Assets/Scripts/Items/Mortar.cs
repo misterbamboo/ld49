@@ -9,6 +9,11 @@ public class Mortar : InstrumentBase
 	private bool _isMorting = false;
 	private float _currentMortingTime = 0f;
 
+	private void Awake()
+	{
+		InstrumentType = InstrumentType.Mortar;
+	}
+
 	private void Update()
 	{
 		if (_isMorting)
@@ -26,21 +31,23 @@ public class Mortar : InstrumentBase
 		_elements.Add(element);
 	}
 
-	public override void Use()
+	public override bool Use()
 	{
 		if (_elements.Count == 0)
 		{
 			// TODO empty feedback
+			return false;
 		}
 		else
 		{
 			StartMorting();
+			return true;
 		}
 	}
 
 	public override void StopUsing()
 	{
-		StopMorting();
+		InterruptMorting();
 	}
 
 	private void StartMorting()
@@ -52,13 +59,14 @@ public class Mortar : InstrumentBase
 
 	private void MortingDone()
 	{
-		StopUsing();
-		// TODO Mortar done feedback
+		_isMorting = false;
 		Debug.Log("Done using Mortar");
+		OnTaskDone?.Invoke();
 	}
 
-	private void StopMorting()
+	private void InterruptMorting()
 	{
 		_isMorting = false;
+		Debug.Log("Mortar interrupted");
 	}
 }

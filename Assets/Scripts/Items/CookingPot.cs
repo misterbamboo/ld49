@@ -1,22 +1,43 @@
 using System.Collections.Generic;
 using Assets.Chemicals;
+using UnityEngine;
 
 public class CookingPot : InstrumentBase
 {
 	private List<ChemicalElements> _elements = new List<ChemicalElements>();
+	private bool _isCooking = false;
+
+	private void Awake()
+	{
+		InstrumentType = InstrumentType.CookingPot;
+	}
+
+	private void Update()
+	{
+		if (_isCooking)
+		{
+			//TODO cook
+		}
+	}
 
 	public override void AddChemicalElement(ChemicalElements element)
 	{
 		_elements.Add(element);
 	}
 
-	public override void StopUsing()
+	public override bool Use()
 	{
-		throw new System.NotImplementedException();
+		Debug.Log("Started Cooking pot!");
+		_isCooking = true;
+		return true;
 	}
 
-	public override void Use()
+	public override void StopUsing()
 	{
-		throw new System.NotImplementedException();
+		if (_isCooking)
+		{
+			Debug.Log("Stopped Cooking pot!");
+			_isCooking = false;
+		}
 	}
 }

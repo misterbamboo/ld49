@@ -20,6 +20,11 @@ public class PickableObject : MonoBehaviour
 
 			transform.position = newParent.position;
 			transform.SetParent(newParent);
+
+			if (_snappableObject != null)
+			{
+				_snappableObject.Unsnap();
+			}
 		}
 	}
 

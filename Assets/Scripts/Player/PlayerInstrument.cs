@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,7 +22,7 @@ public class PlayerInstrument : MonoBehaviour
 			_usableInstruments.Remove(instrument);
 			if (instrument == _usingInstrument)
 			{
-				StopUsingInstrument();
+				StopUsingInstrument(false);
 			}
 		}
 	}
@@ -31,15 +31,19 @@ public class PlayerInstrument : MonoBehaviour
 	{
 		if (_usingInstrument != null)
 		{
-			StopUsingInstrument();
+			StopUsingInstrument(true);
 			return;
 		}
 
 		InstrumentBase closestUsableInstrument = FindClosestUsableObject();
-		if (closestUsableInstrument != null)
+		if (closestUsableInstrument != null && (closestUsableInstrument.InstrumentType == InstrumentType.Mixer || closestUsableInstrument.InstrumentType == InstrumentType.Mortar))
 		{
-			closestUsableInstrument.Use();
-			_usingInstrument = closestUsableInstrument;
+			bool didStart = closestUsableInstrument.Use();
+			if (didStart)
+			{
+				closestUsableInstrument.OnTaskDone += OnTaskDoneHandler;
+				_usingInstrument = closestUsableInstrument;
+			}
 		}
 	}
 
@@ -73,9 +77,24 @@ public class PlayerInstrument : MonoBehaviour
 		return closestUsableInstrument;
 	}
 
-	private void StopUsingInstrument()
+	private void StopUsingInstrument(bool wasToggle)
 	{
-		_usingInstrument.StopUsing();
+		if (wasToggle && (_usingInstrument.InstrumentType == InstrumentType.Mixer || _usingInstrument.InstrumentType == InstrumentType.Mortar))
+		{
+			_usingInstrument.OnTaskDone -= OnTaskDoneHandler;
+			_usingInstrument.StopUsing();
+			_usingInstrument = null;
+		}
+		else if (!wasToggle && _usingInstrument.InstrumentType == InstrumentType.Mortar)
+		{
+			_usingInstrument.OnTaskDone -= OnTaskDoneHandler;
+			_usingInstrument.StopUsing();
+			_usingInstrument = null;
+		}
+	}
+
+	private void OnTaskDoneHandler()
+	{
 		_usingInstrument = null;
 	}
 }
