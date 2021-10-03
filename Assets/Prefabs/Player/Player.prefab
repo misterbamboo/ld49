@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5fec82f58dc524488f4d3c29b8fd21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 5
+  MovementSpeed: 7
   _rotationSpeed: 15
   _maxTimeToLive: 500000
   _rigidbody: {fileID: 4680003469596561744}
@@ -307,6 +307,7 @@ MonoBehaviour:
   _playerEffectsController: {fileID: 384462806406620091}
   _scaleUpFeedback: {fileID: 2448524412981463424}
   _scaleDownFeedback: {fileID: 7500876753755694491}
+  _animator: {fileID: 7234596172227589644}
   InvertControls: 0
 --- !u!114 &4680003469596561711
 MonoBehaviour:
@@ -382,6 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pickableObjectParent: {fileID: 4680003470211969900}
   _chemicalMaterialsScriptableObject: {fileID: 11400000, guid: 18d592a3830394944bbfdf7bd990f108, type: 2}
+  HasAnObject: 0
 --- !u!65 &4680003470211969903
 BoxCollider:
   m_ObjectHideFlags: 0

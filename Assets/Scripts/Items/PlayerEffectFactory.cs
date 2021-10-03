@@ -21,6 +21,8 @@ public class PlayerEffectFactory : MonoBehaviour
 				return new TwiceTheSizePlayerEffect(this, player);
 			case PlayerEffects.FasterSpeed:
 				return new FasterPlayerEffect(this, player);
+			case PlayerEffects.SlowDownSpeed:
+				return new SlowerPlayerEffect(this, player);
 		}
 		return null;
 	}

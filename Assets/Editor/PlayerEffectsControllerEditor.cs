@@ -22,5 +22,9 @@ public class PlayerEffectsControllerEditor : Editor
 		{
 			playerEffectsController.ApplyEffect(PlayerEffects.FasterSpeed);
 		}
+		else if (GUILayout.Button("Slower"))
+		{
+			playerEffectsController.ApplyEffect(PlayerEffects.SlowDownSpeed);
+		}
 	}
 }

@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private PlayerEffectsController _playerEffectsController;
 	[SerializeField] private MMFeedbacks _scaleUpFeedback;
 	[SerializeField] private MMFeedbacks _scaleDownFeedback;
+	[SerializeField] private Animator _animator;
 
 	public bool InvertControls = false;
 
@@ -46,6 +47,8 @@ public class PlayerController : MonoBehaviour
 		{
 			CheckLife();
 		}
+
+		_animator.SetBool("HasAnObject", _playerPickup.HasAnObject);
 	}
 
 	public void ScaleUp()
