@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class SnappableSurface : MonoBehaviour
 {
+    public const string Tag = "SnappableSurface";
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

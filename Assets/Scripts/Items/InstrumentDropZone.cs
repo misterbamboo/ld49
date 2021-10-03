@@ -9,8 +9,10 @@ public class InstrumentDropZone : MonoBehaviour
     {
         if (droppedObject.TryGetComponent(out IChemicalItem chemicalItem))
         {
-            _instrument.AddChemicalItem(chemicalItem);
-            Destroy(droppedObject.gameObject);
+            if(_instrument.AddChemicalItem(chemicalItem))
+            {
+                Destroy(droppedObject.gameObject);
+            }
         }
     }
 }

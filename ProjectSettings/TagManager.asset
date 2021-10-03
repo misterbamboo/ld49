@@ -9,6 +9,7 @@ TagManager:
   - SnappableSurface
   - InstrumentDropZone
   - Instrument
+  - ChemicalBeakerGlass
   layers:
   - Default
   - TransparentFX

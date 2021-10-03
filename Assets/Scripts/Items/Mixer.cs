@@ -37,9 +37,10 @@ public class Mixer : InstrumentBase
         }
     }
 
-    public override void AddChemicalItem(IChemicalItem chemical)
+    public override bool AddChemicalItem(IChemicalItem chemical)
     {
         _elements.Add(chemical);
+        return true;
     }
 
     public override bool Use()

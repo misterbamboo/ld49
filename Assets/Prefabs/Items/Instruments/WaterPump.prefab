@@ -7978,9 +7978,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4434783064589484958}
   - component: {fileID: 3585240561725413026}
+  - component: {fileID: 7731828080138846989}
+  - component: {fileID: 6263471487716781361}
   m_Layer: 0
   m_Name: WaterPump
-  m_TagString: Untagged
+  m_TagString: Instrument
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8013,6 +8015,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.19, y: 0.97, z: 0.25}
   m_Center: {x: 0, y: 0.47, z: 0}
+--- !u!65 &7731828080138846989
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111163581280484710}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3, y: 0.3, z: 0.3}
+  m_Center: {x: 0, y: 0.15, z: -0.44}
+--- !u!114 &6263471487716781361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2111163581280484710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 319110fd8a30c254d9d6de0500087614, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _instrumentFinishedPrefab: {fileID: 0}
+  InstrumentType: 3
+  _pumpHandle: {fileID: 7137567667318460894}
+  _chemicalMaterials: {fileID: 11400000, guid: 18d592a3830394944bbfdf7bd990f108, type: 2}
+  _timeNeededToPump: 2
 --- !u!1 &3330565656653934915
 GameObject:
   m_ObjectHideFlags: 0
@@ -13309,14 +13341,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7137567667318460894}
-  m_LocalRotation: {x: -0.0015988778, y: -0, z: -0, w: 0.9999988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.4997, z: 0.1124}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2002851999413580749}
   m_Father: {fileID: 765107127797337816}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: -0.183, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7719385162145664024
 GameObject:
   m_ObjectHideFlags: 0
@@ -20150,7 +20182,7 @@ GameObject:
   - component: {fileID: 6774626700722650368}
   m_Layer: 0
   m_Name: SnapBase
-  m_TagString: Untagged
+  m_TagString: SnappableSurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22348,7 +22380,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 1
+  m_Radius: 0.5
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0.00000012665987}
+  m_Center: {x: 0, y: 0.75, z: 0.00000012665987}

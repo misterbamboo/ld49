@@ -13,12 +13,12 @@ public class PlayerPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "PickableObject" && other.TryGetComponent<PickableObject>(out PickableObject pickableObject))
+        if (other.tag == PickableObject.Tag && other.TryGetComponent(out PickableObject pickableObject))
         {
             _pickableObjects.Add(pickableObject);
         }
 
-        if (other.tag == "Instrument" && other.TryGetComponent<InstrumentBase>(out InstrumentBase instrument))
+        if (other.tag == InstrumentBase.Tag && other.TryGetComponent(out InstrumentBase instrument))
         {
             _closeInstruments.Add(instrument);
         }
@@ -26,12 +26,12 @@ public class PlayerPickup : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "PickableObject" && other.TryGetComponent<PickableObject>(out PickableObject pickableObject))
+        if (other.tag == PickableObject.Tag && other.TryGetComponent(out PickableObject pickableObject))
         {
             _pickableObjects.Remove(pickableObject);
         }
 
-        if (other.tag == "Instrument" && other.TryGetComponent<InstrumentBase>(out InstrumentBase instrument))
+        if (other.tag == InstrumentBase.Tag && other.TryGetComponent(out InstrumentBase instrument))
         {
             _closeInstruments.Remove(instrument);
         }

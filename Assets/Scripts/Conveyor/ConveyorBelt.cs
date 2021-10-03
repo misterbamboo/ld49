@@ -9,7 +9,7 @@ public class ConveyorBelt : MonoBehaviour
 
 	private void OnTriggerStay(Collider other)
 	{
-		if (other.tag == "PickableObject" && other.TryGetComponent<PickableObject>(out PickableObject pickableObject) && !pickableObject.IsPickedUp)
+		if (other.tag == PickableObject.Tag && other.TryGetComponent(out PickableObject pickableObject) && !pickableObject.IsPickedUp)
 		{
 			other.transform.position = Vector3.MoveTowards(other.transform.position, _endpoint.position, _speed * Time.deltaTime);
 		}

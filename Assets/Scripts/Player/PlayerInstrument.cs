@@ -9,7 +9,7 @@ public class PlayerInstrument : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Instrument" && other.TryGetComponent<InstrumentBase>(out InstrumentBase instrument))
+        if (other.tag == InstrumentBase.Tag && other.TryGetComponent(out InstrumentBase instrument))
         {
             _usableInstruments.Add(instrument);
         }
@@ -17,7 +17,7 @@ public class PlayerInstrument : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Instrument" && other.TryGetComponent<InstrumentBase>(out InstrumentBase instrument))
+        if (other.tag == InstrumentBase.Tag && other.TryGetComponent(out InstrumentBase instrument))
         {
             _usableInstruments.Remove(instrument);
             if (instrument == _usingInstrument)
@@ -36,7 +36,7 @@ public class PlayerInstrument : MonoBehaviour
         }
 
         InstrumentBase closestUsableInstrument = FindClosestUsableObject();
-        if (closestUsableInstrument != null && (closestUsableInstrument.InstrumentType == InstrumentType.Mixer || closestUsableInstrument.InstrumentType == InstrumentType.Mortar))
+        if (closestUsableInstrument != null && (closestUsableInstrument.InstrumentType == InstrumentType.Mixer || closestUsableInstrument.InstrumentType == InstrumentType.Mortar || closestUsableInstrument.InstrumentType == InstrumentType.WaterPump))
         {
             bool didStart = closestUsableInstrument.Use();
             if (didStart)

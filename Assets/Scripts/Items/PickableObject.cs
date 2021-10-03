@@ -3,49 +3,51 @@ using UnityEngine;
 
 public class PickableObject : MonoBehaviour
 {
-	[SerializeField] private Rigidbody _rigibbody;
-	[SerializeField] private SnappableObject _snappableObject;
-	[SerializeField] private MixableObject _mixableObject;
-	public bool IsPickedUp => _isPickedUp;
-	private bool _isPickedUp;
+    public const string Tag = "PickableObject";
 
-	public void Pickup(Transform newParent)
-	{
-		if (!_isPickedUp)
-		{
-			_isPickedUp = true;
+    [SerializeField] private Rigidbody _rigibbody;
+    [SerializeField] private SnappableObject _snappableObject;
+    [SerializeField] private MixableObject _mixableObject;
+    public bool IsPickedUp => _isPickedUp;
+    private bool _isPickedUp;
 
-			_rigibbody.isKinematic = true;
-			_rigibbody.useGravity = false;
+    public void Pickup(Transform newParent)
+    {
+        if (!_isPickedUp)
+        {
+            _isPickedUp = true;
 
-			transform.position = newParent.position;
-			transform.SetParent(newParent);
+            _rigibbody.isKinematic = true;
+            _rigibbody.useGravity = false;
 
-			if (_snappableObject != null)
-			{
-				_snappableObject.Unsnap();
-			}
-		}
-	}
+            transform.position = newParent.position;
+            transform.SetParent(newParent);
 
-	public void Drop()
-	{
-		if (_isPickedUp)
-		{
-			_isPickedUp = false;
+            if (_snappableObject != null)
+            {
+                _snappableObject.Unsnap();
+            }
+        }
+    }
 
-			_rigibbody.isKinematic = false;
-			_rigibbody.useGravity = true;
+    public void Drop()
+    {
+        if (_isPickedUp)
+        {
+            _isPickedUp = false;
 
-			transform.parent = null;
-			if (_mixableObject != null)
-			{
-				_mixableObject.Mix(this);
-			}
-			else if (_snappableObject != null)
-			{
-				_snappableObject.Snap();
-			}
-		}
-	}
+            _rigibbody.isKinematic = false;
+            _rigibbody.useGravity = true;
+
+            transform.parent = null;
+            if (_mixableObject != null)
+            {
+                _mixableObject.Mix(this);
+            }
+            else if (_snappableObject != null)
+            {
+                _snappableObject.Snap();
+            }
+        }
+    }
 }

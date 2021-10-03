@@ -58,10 +58,11 @@ public class Mortar : InstrumentBase
         }
     }
 
-    public override void AddChemicalItem(IChemicalItem chemical)
+    public override bool AddChemicalItem(IChemicalItem chemical)
     {
         filledIndicator.material.color = _chemicalMaterials.GetElementColor(chemical.ChemicalElement);
         _elements.Add(chemical);
+        return true;
     }
 
     public override bool Use()
