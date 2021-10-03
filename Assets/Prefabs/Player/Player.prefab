@@ -308,6 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickableObjectParent: {fileID: 4680003470211969900}
+  _chemicalMaterialsScriptableObject: {fileID: 11400000, guid: 18d592a3830394944bbfdf7bd990f108, type: 2}
 --- !u!65 &4680003470211969903
 BoxCollider:
   m_ObjectHideFlags: 0

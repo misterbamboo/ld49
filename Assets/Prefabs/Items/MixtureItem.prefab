@@ -12,17 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7e805d92c3fcaa41adf7b1a6559bf2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chemicalElementMaterials:
-  - chemicalElement: 1
-    material: {fileID: 2100000, guid: 573b9e6b034996b4fa47d0651a186f92, type: 2}
-  - chemicalElement: 2
-    material: {fileID: 2100000, guid: 5468c89ba65449e4b8b9e0f26cbdfe4a, type: 2}
-  - chemicalElement: 3
-    material: {fileID: 2100000, guid: acc141d4e8c1c1b4395d99291abe7614, type: 2}
-  - chemicalElement: 4
-    material: {fileID: 2100000, guid: c2113cf8135d8ce47b8a33e694c99acc, type: 2}
-  - chemicalElement: 5
-    material: {fileID: 2100000, guid: 9a0b5e68ef2a73342a04bfc13c777ca6, type: 2}
+  _chemicalMaterials: {fileID: 11400000, guid: 18d592a3830394944bbfdf7bd990f108, type: 2}
   _meshRenderer: {fileID: 2191947189312931795}
 --- !u!1001 &2213277709055824789
 PrefabInstance:

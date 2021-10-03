@@ -1,72 +1,134 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Chemicals;
+using Assets.Scripts.Items;
 using UnityEngine;
 
 public class Mortar : InstrumentBase
 {
-	[SerializeField] private float _timeNeededToMort = 2f;
-	private List<ChemicalElements> _elements = new List<ChemicalElements>();
-	private bool _isMorting = false;
-	private float _currentMortingTime = 0f;
+    private const double PediodPerSec = 2 * Math.PI;
 
-	private void Awake()
-	{
-		InstrumentType = InstrumentType.Mortar;
-	}
+    [SerializeField] private ChemicalMaterialsScriptableObject _chemicalMaterials;
 
-	private void Update()
-	{
-		if (_isMorting)
-		{
-			_currentMortingTime += Time.deltaTime;
-			if (_currentMortingTime >= _timeNeededToMort)
-			{
-				MortingDone();
-			}
-		}
-	}
+    [SerializeField] private MeshRenderer filledIndicator;
 
-	public override void AddChemicalElement(ChemicalElements element)
-	{
-		_elements.Add(element);
-	}
+    [SerializeField] private float _timeNeededToMort = 2f;
+    private List<IChemicalItem> _elements = new List<IChemicalItem>();
+    private bool _isMorting = false;
+    private bool _isDone = false;
+    private float _currentMortingTime = 0f;
 
-	public override bool Use()
-	{
-		if (_elements.Count == 0)
-		{
-			// TODO empty feedback
-			return false;
-		}
-		else
-		{
-			StartMorting();
-			return true;
-		}
-	}
+    private Quaternion _initialFilledIndicatorRotation;
 
-	public override void StopUsing()
-	{
-		InterruptMorting();
-	}
+    private void Awake()
+    {
+        InstrumentType = InstrumentType.Mortar;
+    }
 
-	private void StartMorting()
-	{
-		Debug.Log("Start using Mortar");
-		_isMorting = true;
-		_currentMortingTime = 0f;
-	}
+    private void Start()
+    {
+        _initialFilledIndicatorRotation = filledIndicator.transform.rotation;
+    }
 
-	private void MortingDone()
-	{
-		_isMorting = false;
-		Debug.Log("Done using Mortar");
-		OnTaskDone?.Invoke();
-	}
+    private void Update()
+    {
+        if (_isMorting)
+        {
+            _currentMortingTime += Time.deltaTime;
+            if (_currentMortingTime >= _timeNeededToMort)
+            {
+                MortingDone();
+            }
+        }
 
-	private void InterruptMorting()
-	{
-		_isMorting = false;
-		Debug.Log("Mortar interrupted");
-	}
+        UpdateFilledIndicator();
+        UpdateContentRotation();
+
+    }
+
+    private void UpdateContentRotation()
+    {
+        if (_isMorting)
+        {
+            var angleOffset = Math.Sin(PediodPerSec * _currentMortingTime) * 10f;
+            var angle = _initialFilledIndicatorRotation.eulerAngles;
+            var z = (float)(angle.z + angleOffset);
+            filledIndicator.transform.rotation = Quaternion.Euler(new Vector3(angle.x, angle.y, z));
+        }
+    }
+
+    public override void AddChemicalItem(IChemicalItem chemical)
+    {
+        filledIndicator.material.color = _chemicalMaterials.GetElementColor(chemical.ChemicalElement);
+        _elements.Add(chemical);
+    }
+
+    public override bool Use()
+    {
+        if (_elements.Count == 0)
+        {
+            // TODO empty feedback
+            return false;
+        }
+        else
+        {
+            _isDone = false;
+            StartMorting();
+            return true;
+        }
+    }
+
+    public override void StopUsing()
+    {
+        InterruptMorting();
+    }
+
+    private void StartMorting()
+    {
+        Debug.Log("Start using Mortar");
+        _isMorting = true;
+        _currentMortingTime = 0f;
+    }
+
+    private void MortingDone()
+    {
+        _isMorting = false;
+        _isDone = true;
+        Debug.Log("Done using Mortar");
+        OnTaskDone?.Invoke();
+    }
+
+    private void InterruptMorting()
+    {
+        _isMorting = false;
+        Debug.Log("Mortar interrupted");
+    }
+
+    private void UpdateFilledIndicator()
+    {
+        var haveElements = _elements.Any();
+        if (filledIndicator.gameObject.activeInHierarchy != haveElements)
+        {
+            filledIndicator.gameObject.SetActive(haveElements);
+        }
+    }
+
+    public override InstrumentFinishedContent RemoveFinishedContent()
+    {
+        if (!HasFinishedContent())
+        {
+            return null;
+        }
+
+        var finishElements = _elements;
+        _elements = new List<IChemicalItem>();
+        _isDone = false;
+        return new InstrumentFinishedContent(finishElements, _instrumentFinishedPrefab);
+    }
+
+    public override bool HasFinishedContent()
+    {
+        return _elements.Count > 0 && _isDone;
+    }
 }

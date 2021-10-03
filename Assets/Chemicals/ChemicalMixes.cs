@@ -20,8 +20,7 @@ namespace Assets.Chemicals
 
         public static IChemicalMixReaction Mix(ChemicalElements first, ChemicalElements second)
         {
-            return ChemicalMixes
-                .Instance
+            return Instance
                 .chemicalDefinition
                 .Where(d => d.Element == first && d.SecondElement == second || d.Element == second && d.SecondElement == first)
                 .FirstOrDefault();

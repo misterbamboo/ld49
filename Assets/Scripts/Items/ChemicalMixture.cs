@@ -14,7 +14,7 @@ public interface IChemicalMixture
 
 public class ChemicalMixture : MonoBehaviour, IChemicalMixture
 {
-    [SerializeField] private List<ChemicalElementMaterial> _chemicalElementMaterials;
+    [SerializeField] private ChemicalMaterialsScriptableObject _chemicalMaterials;
 
     [SerializeField] private MeshRenderer _meshRenderer;
 
@@ -27,25 +27,12 @@ public class ChemicalMixture : MonoBehaviour, IChemicalMixture
         var first = Reaction.GetFirstChemicalElement();
         var second = Reaction.GetSecondChemicalElement();
 
-        var firstColor = GetElementColor(first);
-        var secondColor = GetElementColor(second);
+        var firstColor = _chemicalMaterials.GetElementColor(first);
+        var secondColor = _chemicalMaterials.GetElementColor(second);
 
         var resultColor = (firstColor + secondColor) / 2;
         
         var material = _meshRenderer.materials.First();
         material.color = resultColor;
     }
-
-    private Color GetElementColor(ChemicalElements element)
-    {
-        return _chemicalElementMaterials.Where(e => e.chemicalElement == element).Select(e => e.material.color).FirstOrDefault();
-    }
-}
-
-[Serializable]
-public struct ChemicalElementMaterial
-{
-    [SerializeField] public ChemicalElements chemicalElement;
-
-    [SerializeField] public Material material;
 }

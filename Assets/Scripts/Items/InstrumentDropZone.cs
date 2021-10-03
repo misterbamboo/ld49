@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class InstrumentDropZone : MonoBehaviour
 {
-	[SerializeField] private InstrumentBase _instrument;
+    [SerializeField] private InstrumentBase _instrument;
 
-	public void DropElement(PickableObject droppedObject)
-	{
-		_instrument.AddChemicalElement(ChemicalElements.None);
-		Destroy(droppedObject.gameObject);
-	}
+    public void DropElement(PickableObject droppedObject)
+    {
+        if (droppedObject.TryGetComponent(out IChemicalItem chemicalItem))
+        {
+            _instrument.AddChemicalItem(chemicalItem);
+            Destroy(droppedObject.gameObject);
+        }
+    }
 }
