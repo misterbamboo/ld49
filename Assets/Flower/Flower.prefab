@@ -48594,6 +48594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4561452583007819899}
   - component: {fileID: 3414535905019317779}
+  - component: {fileID: 2715047904952072560}
   m_Layer: 0
   m_Name: Flower
   m_TagString: Flower
@@ -48643,6 +48644,19 @@ MonoBehaviour:
   - {fileID: 6783614986259027656}
   - {fileID: 3339500728439920496}
   - {fileID: 1969805420020530171}
+--- !u!65 &2715047904952072560
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6872181199980034453}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &7473470456955381918
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,51 +4,59 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : MonoBehaviour
 {
-	public event Action OnPickupInput;
-	public event Action OnUseInput;
-	public float HorizontalInput => _horizontalInput;
-	private float _horizontalInput = 0f;
-	public float VerticalInput => _verticalInput;
-	private float _verticalInput = 0f;
+    public event Action OnPickupInput;
+    public event Action OnUseInput;
+    public event Action OnConsume;
 
-	[SerializeField] private PlayerInputs _playerInputs;
+    public float HorizontalInput => _horizontalInput;
+    private float _horizontalInput = 0f;
+    public float VerticalInput => _verticalInput;
+    private float _verticalInput = 0f;
 
-	private Vector2 _movementInput;
+    [SerializeField] private PlayerInputs _playerInputs;
 
-	private void OnEnable()
-	{
-		if (_playerInputs == null)
-		{
-			_playerInputs = new PlayerInputs();
+    private Vector2 _movementInput;
 
-			_playerInputs.Player.Movement.performed += OnMovementInputHandler;
-			_playerInputs.Player.Pickup.performed += OnPickupInputHandler;
-			_playerInputs.Player.Use.performed += OnUseInputHandler;
-		}
+    private void OnEnable()
+    {
+        if (_playerInputs == null)
+        {
+            _playerInputs = new PlayerInputs();
 
-		_playerInputs.Enable();
-	}
+            _playerInputs.Player.Movement.performed += OnMovementInputHandler;
+            _playerInputs.Player.Pickup.performed += OnPickupInputHandler;
+            _playerInputs.Player.Use.performed += OnUseInputHandler;
+            _playerInputs.Player.Consume.performed += OnConsumeInputHandler;
+        }
 
-	private void OnDisable()
-	{
-		_playerInputs.Disable();
-	}
+        _playerInputs.Enable();
+    }
 
-	public void OnMovementInputHandler(CallbackContext ctx)
-	{
-		_movementInput = ctx.ReadValue<Vector2>();
+    private void OnDisable()
+    {
+        _playerInputs.Disable();
+    }
 
-		_horizontalInput = _movementInput.x;
-		_verticalInput = _movementInput.y;
-	}
+    public void OnMovementInputHandler(CallbackContext ctx)
+    {
+        _movementInput = ctx.ReadValue<Vector2>();
 
-	public void OnPickupInputHandler(CallbackContext context)
-	{
-		OnPickupInput?.Invoke();
-	}
+        _horizontalInput = _movementInput.x;
+        _verticalInput = _movementInput.y;
+    }
 
-	public void OnUseInputHandler(CallbackContext context)
-	{
-		OnUseInput?.Invoke();
-	}
+    public void OnPickupInputHandler(CallbackContext context)
+    {
+        OnPickupInput?.Invoke();
+    }
+
+    public void OnUseInputHandler(CallbackContext context)
+    {
+        OnUseInput?.Invoke();
+    }
+
+    private void OnConsumeInputHandler(CallbackContext ctx)
+    {
+        OnConsume?.Invoke();
+    }
 }

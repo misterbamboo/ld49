@@ -9,6 +9,8 @@ public class ChemicalBeakerGlass : MonoBehaviour
 
     [SerializeField] public GameObject glassContent;
 
+    [SerializeField] private PickableObject _pickableObject;
+
     [SerializeField] private float _max = 3.95f;
 
     [SerializeField] private float _value = 0;
@@ -21,6 +23,13 @@ public class ChemicalBeakerGlass : MonoBehaviour
     {
         _initialGlassContentScale = glassContent.transform.localScale;
         _initialGlassOffsetYOffset = glassContent.transform.localPosition.y - _initialGlassContentScale.y;
+
+        _pickableObject.OnPickup += GlassOnPickupHandler;
+    }
+
+    private void GlassOnPickupHandler()
+    {
+        transform.rotation = Quaternion.identity;
     }
 
     private void Update()

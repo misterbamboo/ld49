@@ -430,6 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glassContent: {fileID: 4618794182685114955}
+  _pickableObject: {fileID: 7688470183579977076}
   _max: 3.95
   _value: 0
 --- !u!114 &5720882872836406739

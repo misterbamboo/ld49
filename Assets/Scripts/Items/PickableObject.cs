@@ -5,6 +5,9 @@ public class PickableObject : MonoBehaviour
 {
     public const string Tag = "PickableObject";
 
+    public event Action OnPickup;
+    public event Action OnDrop;
+
     [SerializeField] private Rigidbody _rigibbody;
     [SerializeField] private SnappableObject _snappableObject;
     [SerializeField] private MixableObject _mixableObject;
@@ -27,6 +30,8 @@ public class PickableObject : MonoBehaviour
             {
                 _snappableObject.Unsnap();
             }
+
+            OnPickup?.Invoke();
         }
     }
 
@@ -48,6 +53,8 @@ public class PickableObject : MonoBehaviour
             {
                 _snappableObject.Snap();
             }
+
+            OnDrop?.Invoke();
         }
     }
 }

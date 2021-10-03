@@ -72,8 +72,15 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
     {
         if (ObjectIsntDisposed())
         {
-            var renderer = GetComponent<MeshRenderer>();
-            renderer.material.color = _chemicalMaterialsScriptableObject.GetElementColor(_selectedElement);
+            try
+            {
+                var renderer = GetComponent<MeshRenderer>();
+                renderer.material.color = _chemicalMaterialsScriptableObject.GetElementColor(_selectedElement);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"Error to fix: {e.Message}");
+            }
         }
     }
 

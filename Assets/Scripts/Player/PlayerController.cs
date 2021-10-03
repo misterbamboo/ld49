@@ -1,98 +1,116 @@
+using Assets.Chemicals;
+using Assets.Scripts.Player;
 using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-	public event Action onDied;
-	[SerializeField] private float _movementSpeed = 7f;
-	[SerializeField] private float _rotationSpeed = 15f;
-	[SerializeField] private float _maxTimeToLive = 20f;
-	[SerializeField] private Rigidbody _rigidbody;
-	[SerializeField] private InputManager _inputManager;
-	[SerializeField] private PlayerPickup _playerPickup;
-	[SerializeField] private PlayerInstrument _playerInstrument;
+    public event Action onDied;
+    [SerializeField] private float _movementSpeed = 7f;
+    [SerializeField] private float _rotationSpeed = 15f;
+    [SerializeField] private float _maxTimeToLive = 20f;
+    [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private PlayerPickup _playerPickup;
+    [SerializeField] private PlayerInstrument _playerInstrument;
+    [SerializeField] private PlayerFlower _playerFlower;
+    [SerializeField] private PlayerConsumeChemical _playerConsumeChemical;
 
-	private Vector3 _moveDirection;
-	private Transform _cameraObject;
-	private float _timeToLive;
+    private Vector3 _moveDirection;
 
-	private void Awake()
-	{
-		_cameraObject = Camera.main.transform;
-		_inputManager.OnPickupInput += OnPickupInputHandler;
-		_inputManager.OnUseInput += OnUseInputHandler;
+    private Transform _cameraObject;
+    private float _timeToLive;
 
-		_timeToLive = _maxTimeToLive;
-	}
+    private void Awake()
+    {
+        _cameraObject = Camera.main.transform;
+        _inputManager.OnPickupInput += OnPickupInputHandler;
+        _inputManager.OnUseInput += OnUseInputHandler;
+        _inputManager.OnConsume += OnConsumeInputHandler;
 
-	private void Update()
-	{
-		HandleMovement();
-		HandleRotation();
+        _timeToLive = _maxTimeToLive;
+    }
 
-		if (!IsDead)
-		{
-			CheckLife();
-		}
-	}
+    private void Update()
+    {
+        HandleMovement();
+        HandleRotation();
 
-	private void CheckLife()
-	{
-		ReduceTimeToLive();
-		if (IsDead)
-		{
-			DieEvent();
-		}
-	}
+        if (!IsDead)
+        {
+            CheckLife();
+        }
+    }
 
-	private void DieEvent()
-	{
-		onDied?.Invoke();
-	}
+    private void CheckLife()
+    {
+        ReduceTimeToLive();
+        if (IsDead)
+        {
+            DieEvent();
+        }
+    }
 
-	private void ReduceTimeToLive()
-	{
-		_timeToLive -= Time.deltaTime;
-	}
+    private void DieEvent()
+    {
+        onDied?.Invoke();
+    }
 
-	private bool IsDead => _timeToLive <= 0;
+    private void ReduceTimeToLive()
+    {
+        _timeToLive -= Time.deltaTime;
+    }
 
-	private void HandleMovement()
-	{
-		_moveDirection = _cameraObject.forward * _inputManager.VerticalInput;
-		_moveDirection = _moveDirection + _cameraObject.right * _inputManager.HorizontalInput;
-		_moveDirection.Normalize();
-		_moveDirection.y = 0;
-		_moveDirection = _moveDirection * _movementSpeed;
+    private bool IsDead => _timeToLive <= 0;
 
-		_rigidbody.velocity = _moveDirection;
-	}
+    private void HandleMovement()
+    {
+        _moveDirection = _cameraObject.forward * _inputManager.VerticalInput;
+        _moveDirection = _moveDirection + _cameraObject.right * _inputManager.HorizontalInput;
+        _moveDirection.Normalize();
+        _moveDirection.y = 0;
+        _moveDirection = _moveDirection * _movementSpeed;
 
-	private void HandleRotation()
-	{
-		Vector3 targetDirection = Vector3.zero;
+        _rigidbody.velocity = _moveDirection;
+    }
 
-		targetDirection = _cameraObject.forward * _inputManager.VerticalInput;
-		targetDirection = targetDirection + _cameraObject.right * _inputManager.HorizontalInput;
-		targetDirection.Normalize();
-		targetDirection.y = 0;
+    private void HandleRotation()
+    {
+        Vector3 targetDirection = Vector3.zero;
 
-		if (targetDirection == Vector3.zero)
-			targetDirection = transform.forward;
+        targetDirection = _cameraObject.forward * _inputManager.VerticalInput;
+        targetDirection = targetDirection + _cameraObject.right * _inputManager.HorizontalInput;
+        targetDirection.Normalize();
+        targetDirection.y = 0;
 
-		Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-		Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+        if (targetDirection == Vector3.zero)
+            targetDirection = transform.forward;
 
-		transform.rotation = playerRotation;
-	}
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
-	private void OnPickupInputHandler()
-	{
-		_playerPickup.TogglePickup();
-	}
+        transform.rotation = playerRotation;
+    }
 
-	private void OnUseInputHandler()
-	{
-		_playerInstrument.ToggleUse();
-	}
+    private void OnPickupInputHandler()
+    {
+        _playerFlower.ToggleInteraction();
+        _playerPickup.TogglePickup();
+    }
+
+    private void OnUseInputHandler()
+    {
+        _playerFlower.ToggleInteraction();
+        _playerInstrument.ToggleUse();
+    }
+
+    private void OnConsumeInputHandler()
+    {
+        _playerConsumeChemical.ToogleConsume();
+    }
+
+    public void GiveEffect(PlayerEffects playerEffects)
+    {
+        Debug.Log("Player consume : " + playerEffects);
+    }
 }

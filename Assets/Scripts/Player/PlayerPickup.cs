@@ -12,6 +12,8 @@ public class PlayerPickup : MonoBehaviour
     private List<InstrumentBase> _closeInstruments = new List<InstrumentBase>();
     private PickableObject _pickedUpObject = null;
 
+    public PickableObject PickedUpObject => _pickedUpObject;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == PickableObject.Tag && other.TryGetComponent(out PickableObject pickableObject))

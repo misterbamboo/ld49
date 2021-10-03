@@ -70,6 +70,8 @@ MonoBehaviour:
   _inputManager: {fileID: 4680003469596561711}
   _playerPickup: {fileID: 4680003470211969902}
   _playerInstrument: {fileID: 2858990972850128196}
+  _playerFlower: {fileID: 1777621106148080964}
+  _playerConsumeChemical: {fileID: 4925120883590660570}
 --- !u!114 &4680003469596561711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +276,8 @@ GameObject:
   - component: {fileID: 4680003470211969902}
   - component: {fileID: 4680003470211969903}
   - component: {fileID: 2858990972850128196}
+  - component: {fileID: 1777621106148080964}
+  - component: {fileID: 4925120883590660570}
   m_Layer: 0
   m_Name: PickableObjectParent
   m_TagString: Untagged
@@ -334,3 +338,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81bb9e200364c34428bb8019ea6b806c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1777621106148080964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4680003470211969901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883edb0dcbe0c2346b3aaf45ddc5080b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPickup: {fileID: 4680003470211969902}
+--- !u!114 &4925120883590660570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4680003470211969901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e54fa8032aed4a4479f0541a349a595b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPickup: {fileID: 4680003470211969902}
+  _playerController: {fileID: 4680003469596561710}
