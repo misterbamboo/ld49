@@ -40,6 +40,7 @@ public class PickableObject : MonoBehaviour
             }
 
             OnPickup?.Invoke();
+            transform.rotation = Quaternion.identity;
         }
     }
 

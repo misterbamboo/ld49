@@ -13,6 +13,8 @@ public class Mortar : InstrumentBase
 
     [SerializeField] private MeshRenderer filledIndicator;
 
+    [SerializeField] private MeshRenderer finishedIndicator;
+
     [SerializeField] private float _timeNeededToMort = 2f;
     private List<IChemicalItem> _elements = new List<IChemicalItem>();
     private bool _isMorting = false;
@@ -42,7 +44,7 @@ public class Mortar : InstrumentBase
             }
         }
 
-        UpdateFilledIndicator();
+        UpdateFilledAndFinishedIndicator();
         UpdateContentRotation();
 
     }
@@ -63,6 +65,7 @@ public class Mortar : InstrumentBase
         if (chemical.ChemicalStage == ChemicalStages.Raw && chemical.ChemicalElement != ChemicalElements.Blue)
         {
             filledIndicator.material.color = _chemicalMaterials.GetElementColor(chemical.ChemicalElement);
+            finishedIndicator.material.color = filledIndicator.material.color;
             _elements.Add(chemical);
             return true;
         }
@@ -111,12 +114,23 @@ public class Mortar : InstrumentBase
         Debug.Log("Mortar interrupted");
     }
 
-    private void UpdateFilledIndicator()
+    private void UpdateFilledAndFinishedIndicator()
     {
         var haveElements = _elements.Any();
         if (filledIndicator.gameObject.activeInHierarchy != haveElements)
         {
             filledIndicator.gameObject.SetActive(haveElements);
+        }
+
+        if (_isDone)
+        {
+            if (!finishedIndicator.gameObject.activeInHierarchy)
+                finishedIndicator.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (finishedIndicator.gameObject.activeInHierarchy)
+                finishedIndicator.gameObject.SetActive(false);
         }
     }
 

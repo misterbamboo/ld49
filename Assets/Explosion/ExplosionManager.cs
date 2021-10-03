@@ -9,7 +9,7 @@ public class ExplosionManager : MonoBehaviour
 
     [SerializeField] private int ExplosionRadius = 8;
 
-    [SerializeField] private int ExplosionForce = 1000;
+    [SerializeField] private int ExplosionForce = 2000;
 
     [SerializeField] private int UpwardsModifier = 100;
 

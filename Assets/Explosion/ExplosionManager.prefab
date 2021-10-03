@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerController: {fileID: 0}
-  ExplosionRadius: 8
-  ExplosionForce: 500
+  ExplosionRadius: 6
+  ExplosionForce: 2000
   UpwardsModifier: 100
