@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         bool continuerGetUp = true;
         while (continuerGetUp)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.06f);
             var angle = Quaternion.Angle(transform.rotation , targetRotation);
             print(angle);
             if (angle < 10)
