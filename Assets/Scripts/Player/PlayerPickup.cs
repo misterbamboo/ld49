@@ -103,17 +103,24 @@ public class PlayerPickup : MonoBehaviour
 		}
 	}
 
-	private static void HandleMultipleElements(InstrumentFinishedContent content, GameObject gameobject)
-	{
-		if (content.IsMultipleElements())
-		{
-			var chemicalMixture = gameobject.GetComponent<IChemicalMixture>();
-			if (chemicalMixture != null)
-			{
-				chemicalMixture.React(content.GetFirstChemicalItem(), content.GetSecondChemicalItem());
-			}
-		}
-	}
+    private static void HandleMultipleElements(InstrumentFinishedContent content, GameObject gameobject)
+    {
+        if (content.IsMultipleElements())
+        {
+            var chemicalMixture = gameobject.GetComponent<IChemicalMixture>();
+            if (chemicalMixture != null)
+            {
+                var first = content.GetFirstChemicalItem();
+                var second = content.GetSecondChemicalItem();
+                var reaction = first.React(second);
+
+                // NOTE: Should already explode at this stage (if should explode)
+                // reaction.HasInstantEffect()
+
+                chemicalMixture.FillWithChemicalMixture(reaction);
+            }
+        }
+    }
 
 	private PickableObject FindClosestPickableObject(Func<PickableObject, bool> func = null)
 	{
