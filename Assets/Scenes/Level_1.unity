@@ -1917,7 +1917,7 @@ MonoBehaviour:
   _targets:
   - {fileID: 374855965}
   - {fileID: 1223160128}
-  _offset: {x: 1, y: 4.35, z: -12}
+  _offset: {x: 1, y: 5.5, z: -12}
   _closeFromTargetDistance: 2
   _smoothTime: 0.3
   _minZoom: 40
