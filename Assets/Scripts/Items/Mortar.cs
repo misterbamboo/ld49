@@ -60,7 +60,7 @@ public class Mortar : InstrumentBase
 
     public override bool AddChemicalItem(IChemicalItem chemical)
     {
-        if (chemical.ChemicalStage == ChemicalStages.Raw)
+        if (chemical.ChemicalStage == ChemicalStages.Raw && chemical.ChemicalElement != ChemicalElements.Blue)
         {
             filledIndicator.material.color = _chemicalMaterials.GetElementColor(chemical.ChemicalElement);
             _elements.Add(chemical);
