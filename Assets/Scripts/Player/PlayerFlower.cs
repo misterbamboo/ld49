@@ -69,7 +69,15 @@ namespace Assets.Scripts.Player
                 yield return 0;
             }
 
-            Destroy(gameObject);
+            var chemicalBeakerGlass = gameObject.GetComponent<ChemicalBeakerGlass>();
+            if (chemicalBeakerGlass != null)
+            {
+                chemicalBeakerGlass.Fill
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         private float ThrowCurve(float t)

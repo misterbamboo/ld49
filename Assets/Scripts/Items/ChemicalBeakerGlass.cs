@@ -15,9 +15,13 @@ public class ChemicalBeakerGlass : MonoBehaviour
 
     [SerializeField] private float _value = 0;
 
+    [SerializeField] private float _timeToEmpty = 1f;
+
     private Vector3 _initialGlassContentScale;
 
     private float _initialGlassOffsetYOffset;
+
+    private float _emptyAnimationTime;
 
     private void Start()
     {
@@ -75,6 +79,31 @@ public class ChemicalBeakerGlass : MonoBehaviour
         {
             _value = _max;
             AddChemicalElement();
+        }
+    }
+
+    public void EmptyGlass()
+    {
+        var chemicalItem = gameObject.AddComponent<ChemicalItem>();
+        if (chemicalItem)
+        {
+            Destroy(chemicalItem);
+        }
+
+        StartCoroutine(EmptyGlassAnim());
+    }
+
+    public IEnumerator EmptyGlassAnim()
+    {
+        _emptyAnimationTime = _timeToEmpty;
+        while (_emptyAnimationTime > 0)
+        {
+            _emptyAnimationTime -= Time.deltaTime;
+            var ratio = _emptyAnimationTime / _timeToEmpty;
+            var t = 1 - ratio;
+
+            _value = Mathf.Lerp(_max, 0, t);
+            yield return 0;
         }
     }
 
