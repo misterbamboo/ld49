@@ -9,6 +9,7 @@ public class Flower : MonoBehaviour
 
 	public static Flower Instance { get; private set; }
 	[SerializeField] private Image _progressBar;
+	[SerializeField] private Animator _animator;
 
 	private void Awake()
 	{
@@ -85,5 +86,35 @@ public class Flower : MonoBehaviour
 	public void GiveEffect(FlowerEffects flowerEffect)
 	{
 		Debug.Log("Flower received the effect: " + flowerEffect);
+		float effect = 0f;
+		switch (flowerEffect)
+		{
+			case FlowerEffects.BestLifePotion:
+				effect = 60f;
+				break;
+			case FlowerEffects.DoublePoison:
+				effect = -20f;
+				break;
+			case FlowerEffects.Toxic:
+				effect = -10f;
+				break;
+			case FlowerEffects.MoreLife:
+				effect = 30f;
+				break;
+			case FlowerEffects.ExplosionWhenDrink:
+				_timeToLive = 0f;
+				break;
+			case FlowerEffects.SlowDownLoseLife:
+				effect = 10f;
+				break;
+			default:
+				effect = 8f;
+				break;
+		}
+		_timeToLive += effect;
+		if (effect <= 0)
+		{
+			_animator.SetTrigger("No");
+		}
 	}
 }
