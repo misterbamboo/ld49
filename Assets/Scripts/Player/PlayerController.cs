@@ -1,5 +1,6 @@
 using Assets.Chemicals;
 using Assets.Scripts.Player;
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public event Action onDied;
-    [SerializeField] private float _movementSpeed = 7f;
+    public float MovementSpeed = 7f;
     [SerializeField] private float _rotationSpeed = 15f;
     [SerializeField] private float _maxTimeToLive = 20f;
     [SerializeField] private Rigidbody _rigidbody;
@@ -16,6 +17,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInstrument _playerInstrument;
     [SerializeField] private PlayerFlower _playerFlower;
     [SerializeField] private PlayerConsumeChemical _playerConsumeChemical;
+    [SerializeField] private PlayerEffectsController _playerEffectsController;
+    [SerializeField] private MMFeedbacks _scaleUpFeedback;
+    [SerializeField] private MMFeedbacks _scaleDownFeedback;
+
+    public bool InvertControls = false;
 
     private Vector3 _moveDirection;
 
@@ -68,7 +74,7 @@ public class PlayerController : MonoBehaviour
         while (continuerGetUp)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.06f);
-            var angle = Quaternion.Angle(transform.rotation , targetRotation);
+            var angle = Quaternion.Angle(transform.rotation, targetRotation);
             print(angle);
             if (angle < 10)
             {
@@ -106,6 +112,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ScaleUp()
+    {
+        _scaleUpFeedback.PlayFeedbacks();
+    }
+
+    public void ScaleDown()
+    {
+        _scaleDownFeedback.PlayFeedbacks();
+    }
+
     private void CheckLife()
     {
         ReduceTimeToLive();
@@ -132,10 +148,12 @@ public class PlayerController : MonoBehaviour
         _moveDirection = _cameraObject.forward * _inputManager.VerticalInput;
         _moveDirection = _moveDirection + _cameraObject.right * _inputManager.HorizontalInput;
         _moveDirection.Normalize();
-        _moveDirection = _moveDirection * _movementSpeed;
+        _moveDirection = _moveDirection * MovementSpeed;
 
+        _moveDirection = InvertControls ? -_moveDirection : _moveDirection;
         _moveDirection.y = _rigidbody.velocity.y;
         _rigidbody.velocity = _moveDirection;
+
     }
 
     private void HandleRotation()
@@ -176,5 +194,6 @@ public class PlayerController : MonoBehaviour
     public void GiveEffect(PlayerEffects playerEffects)
     {
         Debug.Log("Player consume : " + playerEffects);
+        _playerEffectsController.ApplyEffect(playerEffects);
     }
 }

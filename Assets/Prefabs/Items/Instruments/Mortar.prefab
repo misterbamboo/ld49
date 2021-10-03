@@ -346,7 +346,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 26e8c053fe4c31f439b3e5133539c16e, type: 2}
+  - {fileID: 2100000, guid: 96bf5900c744d304f8a1f8d87bd1f7ea, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -620,6 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d30c73823c137ea4b95746c169a4b70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _instrumentFinishedPrefab: {fileID: 0}
   InstrumentType: 0
   _chemicalMaterials: {fileID: 11400000, guid: 18d592a3830394944bbfdf7bd990f108, type: 2}
   filledIndicator: {fileID: 7127449101561051700}
