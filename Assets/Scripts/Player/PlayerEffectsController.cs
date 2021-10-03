@@ -9,6 +9,6 @@ public class PlayerEffectsController : MonoBehaviour
 	public void ApplyEffect(PlayerEffects effect)
 	{
 		PlayerEffectBase playerEffect = PlayerEffectFactory.Instance.GetEffect(effect, _playerController);
-		playerEffect.Do();
+		playerEffect?.Do();
 	}
 }
