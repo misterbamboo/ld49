@@ -21,8 +21,6 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
 {
     [SerializeField] private ChemicalMaterialsScriptableObject _chemicalMaterialsScriptableObject;
 
-    [SerializeField] private GameObject _chemicalMixturePrefab;
-
     [SerializeField] private ChemicalElements _chemicalElement;
 
     [SerializeField] private ChemicalStages _chemicalStage;
@@ -34,6 +32,12 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
     public ChemicalStages ChemicalStage => _chemicalStage;
 
     private bool _alreadyReact;
+
+    private MeshRenderer _meshRenderer;
+    private Color[] _colorsWeel;
+    private float _colorWeelTotalTime = 4;
+    private float _currentColorTime = 0;
+
     public void FlagAsAlreadyReact()
     {
         _alreadyReact = true;
@@ -46,6 +50,34 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
     private void Start()
     {
         Init(_chemicalElement, _chemicalStage);
+
+        _meshRenderer = GetComponent<MeshRenderer>();
+        _colorsWeel = new Color[]
+        {
+            _chemicalMaterialsScriptableObject.GetElementColor(ChemicalElements.Green),
+            _chemicalMaterialsScriptableObject.GetElementColor(ChemicalElements.Purple),
+            _chemicalMaterialsScriptableObject.GetElementColor(ChemicalElements.Red),
+            _chemicalMaterialsScriptableObject.GetElementColor(ChemicalElements.Yellow),
+        };
+    }
+
+    private void Update()
+    {
+        if (_chemicalElement == ChemicalElements.Random)
+        {
+            _currentColorTime += Time.deltaTime;
+            if (_currentColorTime > _colorWeelTotalTime)
+            {
+                _currentColorTime -= _colorWeelTotalTime;
+            }
+
+            var ratio = _currentColorTime / _colorWeelTotalTime;
+            var freeIndex = ((float)_colorsWeel.Length) * ratio;
+            var index = (int)freeIndex;
+
+            var primaryIndex = index >= _colorsWeel.Length ? 0 : index;
+            _meshRenderer.material.color = _colorsWeel[primaryIndex];
+        }
     }
 
     public void Init(ChemicalElements chemicalElement, ChemicalStages chemicalStage)
@@ -70,7 +102,7 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
 
     private void TryUpdateColor()
     {
-        if (ObjectIsntDisposed())
+        if (ObjectIsntDisposed() && _chemicalElement != ChemicalElements.Random)
         {
             try
             {
@@ -93,7 +125,8 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
     private static ChemicalElements GetRandomElement()
     {
         var count = Enum.GetNames(typeof(ChemicalElements)).Length;
-        var colorIndex = UnityEngine.Random.Range(1, count - 1);
+        // 2 to lengh -1 (2 because want to skip blue)
+        var colorIndex = UnityEngine.Random.Range(2, count - 1);
         var element = (ChemicalElements)colorIndex;
         return element;
     }

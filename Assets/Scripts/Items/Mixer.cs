@@ -107,7 +107,7 @@ public class Mixer : InstrumentBase
 
     private bool CanBeAdded(IChemicalItem chemical)
     {
-        return ChimicalAccepted(chemical) && SpotFree(chemical);
+        return FreeSpot() && ChimicalAccepted(chemical);
     }
 
     private static bool ChimicalAccepted(IChemicalItem chemical)
@@ -125,29 +125,9 @@ public class Mixer : InstrumentBase
         return chemical.ChemicalElement == ChemicalElements.Blue && chemical.ChemicalStage == ChemicalStages.Raw;
     }
 
-    private bool SpotFree(IChemicalItem chemical)
+    private bool FreeSpot()
     {
-        return WaterSpotFree(chemical) && PowderSpotFree(chemical);
-    }
-
-    private bool WaterSpotFree(IChemicalItem chemical)
-    {
-        if (chemical.ChemicalElement == ChemicalElements.Blue)
-        {
-            return !_elements.Any(e => e.ChemicalElement == ChemicalElements.Blue);
-        }
-
-        return true;
-    }
-
-    private bool PowderSpotFree(IChemicalItem chemical)
-    {
-        if (chemical.ChemicalStage == ChemicalStages.Powder)
-        {
-            return !_elements.Any(e => e.ChemicalStage == ChemicalStages.Powder);
-        }
-
-        return true;
+        return _elements.Count < 2;
     }
 
     public override bool Use()

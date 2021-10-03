@@ -141,17 +141,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ingredientProbabilities:
-  - GameObject: {fileID: 3398800349611926687, guid: e90dd4f35bcd0a544a36f2926ebe00bc, type: 3}
-    Probability: 1
   - GameObject: {fileID: 5817291306632954958, guid: a7fa5f7e59e06f848a33ea01a104300f, type: 3}
-    Probability: 1
+    Probability: 0.25
   - GameObject: {fileID: 6083213833446152474, guid: d05f916116279304386638021077a2fe, type: 3}
-    Probability: 1
+    Probability: 0.25
   - GameObject: {fileID: 3531983828052435375, guid: 931a055e62ed7f6448d1606af0d67012, type: 3}
     Probability: 1
   - GameObject: {fileID: 1607193136046460368, guid: c7abe4f5f1cd54d42a200a9d0c19dd17, type: 3}
-    Probability: 1
+    Probability: 0.25
   - GameObject: {fileID: 6572266542871180252, guid: 42b24a236caeb254aad753917945d504, type: 3}
-    Probability: 1
+    Probability: 0.25
   _spawnPoint: {fileID: 7398158502541318603}
   _spawnInterval: 2

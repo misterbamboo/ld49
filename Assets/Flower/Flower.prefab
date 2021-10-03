@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _progressBar: {fileID: 8365915376482059196}
-  _maxTimeToLive: 8
+  _maxTimeToLive: 60
   _petals: []
 --- !u!65 &2715047904952072560
 BoxCollider:
