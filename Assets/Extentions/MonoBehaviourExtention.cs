@@ -16,7 +16,7 @@ public static class MonoBehaviourExtention
 
         foreach (T element in elements)
         {
-            if (element == null)
+            if (element.gameObject == null)
             {
                 elementsToRemoved.Add(element);
                 continue;

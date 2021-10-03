@@ -43,17 +43,16 @@ namespace Assets.Scripts.Player
             {
                 _flowerInRange.GiveEffect(reaction.GetFlowerEffect());
 
-                // Remove PickableObject component
-                Destroy(pickedUpObject);
-                StartCoroutine(GiveFlowerAnimation(pickedUpObject.gameObject, _flowerInRange.transform.position));
+                pickedUpObject.SetAvailableForPickup(false);
+                StartCoroutine(GiveFlowerAnimation(pickedUpObject, _flowerInRange.transform.position));
             }
         }
 
-        private IEnumerator GiveFlowerAnimation(GameObject gameObject, Vector3 flowerPosition)
+        private IEnumerator GiveFlowerAnimation(PickableObject pickableObject, Vector3 flowerPosition)
         {
             // Throw curve
             // https://www.desmos.com/calculator/qsqtxxqasl
-            var transform = gameObject.transform;
+            var transform = pickableObject.gameObject.transform;
             var initialPos = transform.position;
 
             float timeUntilFinished = 1;
@@ -69,14 +68,15 @@ namespace Assets.Scripts.Player
                 yield return 0;
             }
 
-            var chemicalBeakerGlass = gameObject.GetComponent<ChemicalBeakerGlass>();
+            var chemicalBeakerGlass = pickableObject.gameObject.GetComponent<ChemicalBeakerGlass>();
             if (chemicalBeakerGlass != null)
             {
-                chemicalBeakerGlass.Fill
+                chemicalBeakerGlass.EmptyGlass();
+                pickableObject.SetAvailableForPickup(true);
             }
             else
             {
-                Destroy(gameObject);
+                Destroy(pickableObject.gameObject);
             }
         }
 

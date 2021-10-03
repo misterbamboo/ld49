@@ -14,6 +14,14 @@ public class PickableObject : MonoBehaviour
     public bool IsPickedUp => _isPickedUp;
     private bool _isPickedUp;
 
+    private bool _availableForPickup = true;
+    public bool IsAvailableForPickup => _availableForPickup;
+
+    public void SetAvailableForPickup(bool availableForPickup)
+    {
+        _availableForPickup = availableForPickup;
+    }
+
     public void Pickup(Transform newParent)
     {
         if (!_isPickedUp)

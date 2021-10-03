@@ -72,6 +72,11 @@ public class ChemicalBeakerGlass : MonoBehaviour
         }
     }
 
+    public void SwitchColor(Color color)
+    {
+        glassContent.GetComponent<MeshRenderer>().material.color = color;
+    }
+
     public void Fill(float quantity)
     {
         _value += quantity;
@@ -118,4 +123,6 @@ public class ChemicalBeakerGlass : MonoBehaviour
         chemicalItem = gameObject.AddComponent<ChemicalItem>();
         chemicalItem.Init(Assets.Chemicals.ChemicalElements.Blue, Assets.Chemicals.ChemicalStages.Raw);
     }
+
+
 }

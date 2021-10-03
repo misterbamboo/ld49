@@ -19,6 +19,8 @@ public class WaterPump : InstrumentBase
     private float _currentPumpingTime = 0f;
     private List<ChemicalBeakerGlass> _snapedChemicalBeakerGlass = new List<ChemicalBeakerGlass>();
 
+    private ChemicalBeakerGlass CurrentGlass => _snapedChemicalBeakerGlass.First();
+
     private void Awake()
     {
         InstrumentType = InstrumentType.WaterPump;
@@ -65,8 +67,7 @@ public class WaterPump : InstrumentBase
 
     private void FillGlass()
     {
-        var glass = _snapedChemicalBeakerGlass.First();
-        glass.Fill(Time.deltaTime);
+        CurrentGlass.Fill(Time.deltaTime);
     }
 
     private void UpdateContentRotation()
@@ -118,6 +119,10 @@ public class WaterPump : InstrumentBase
     private void StartPumping()
     {
         Debug.Log("Start using WaterPump");
+
+        var color = _chemicalMaterials.GetElementColor(ChemicalElements.Blue);
+        CurrentGlass.SwitchColor(color);
+
         _isPumping = true;
         _currentPumpingTime = 0f;
     }

@@ -1,7 +1,9 @@
 using Assets.Chemicals;
 using Assets.Scripts.Items;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerPickup : MonoBehaviour
@@ -50,7 +52,7 @@ public class PlayerPickup : MonoBehaviour
             return;
         }
 
-        PickableObject closestPickableObject = FindClosestPickableObject();
+        PickableObject closestPickableObject = FindClosestPickableObject(p => p.IsAvailableForPickup);
         if (closestPickableObject != null)
         {
             closestPickableObject.Pickup(_pickableObjectParent);
@@ -109,14 +111,19 @@ public class PlayerPickup : MonoBehaviour
         }
     }
 
-    private PickableObject FindClosestPickableObject()
+    private PickableObject FindClosestPickableObject(Func<PickableObject, bool> func = null)
     {
+        if (func == null)
+        {
+            func = p => true;
+        }
+
         PickableObject closestPickableObject = null;
         float minDist = Mathf.Infinity;
 
         List<PickableObject> objectsToRemoved = new List<PickableObject>();
 
-        foreach (PickableObject pickableObject in _pickableObjects)
+        foreach (PickableObject pickableObject in _pickableObjects.Where(func))
         {
             if (pickableObject == null)
             {
