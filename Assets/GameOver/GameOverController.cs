@@ -1,11 +1,15 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
+	[SerializeField] private GameObject _gameoverScreen;
+	[SerializeField] private float _reloadSceneTime = 5f;
 	private void Start()
 	{
 		SubscribeEvents();
-		gameObject.SetActive(false);
+		_gameoverScreen.SetActive(false);
 	}
 
 	private void OnDestroy()
@@ -44,6 +48,15 @@ public class GameOverController : MonoBehaviour
 
 	private void GameOver()
 	{
-		gameObject.SetActive(true);
+		_gameoverScreen.SetActive(true);
+		StartCoroutine(RestartGame());
+	}
+
+	private IEnumerator RestartGame()
+	{
+		yield return new WaitForSeconds(_reloadSceneTime);
+
+		Scene scene = SceneManager.GetActiveScene();
+		SceneManager.LoadScene(scene.name);
 	}
 }

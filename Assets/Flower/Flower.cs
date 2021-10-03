@@ -1,98 +1,89 @@
 using Assets.Chemicals;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Flower : MonoBehaviour
 {
-    public const string Tag = "Flower";
+	public const string Tag = "Flower";
 
-    public static Flower Instance { get; private set; }
+	public static Flower Instance { get; private set; }
+	[SerializeField] private Image _progressBar;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
+	private void Awake()
+	{
+		Instance = this;
+	}
 
-    [SerializeField] private float _maxTimeToLive;
+	[SerializeField] private float _maxTimeToLive;
 
-    [SerializeField] private GameObject[] _petals;
+	[SerializeField] private GameObject[] _petals;
 
-    public event Action onDied;
+	public event Action onDied;
 
-    private float _timeToLive;
+	private float _timeToLive;
 
-    void Start()
-    {
-        _timeToLive = _maxTimeToLive;
-    }
+	void Start()
+	{
+		_timeToLive = _maxTimeToLive;
+	}
 
-    void Update()
-    {
-        if (Alive())
-        {
-            CheckLife();
-        }
-    }
+	void Update()
+	{
+		if (Alive())
+		{
+			CheckLife();
+		}
+	}
 
-    private void CheckLife()
-    {
-        ReduceTimeToLive();
-        RemoveLostPetals();
-        if (Died())
-        {
-            DieEvent();
-        }
-    }
+	private void CheckLife()
+	{
+		ReduceTimeToLive();
+		if (Died())
+		{
+			DieEvent();
+		}
+	}
 
-    private void ReduceTimeToLive()
-    {
-        _timeToLive -= Time.deltaTime;
-    }
+	private void ReduceTimeToLive()
+	{
+		_timeToLive -= Time.deltaTime;
+		var lifeRatio = _timeToLive / _maxTimeToLive;
+		_progressBar.fillAmount = lifeRatio;
+	}
 
-    private void RemoveLostPetals()
-    {
-        var lifeRatio = _timeToLive / _maxTimeToLive;
-        var totalPetals = (double)_petals.Length;
-        var wantedPetalCount = (int)Math.Ceiling(totalPetals * lifeRatio);
+	private bool PetalCountChanged(int wantedPetalCount)
+	{
+		return wantedPetalCount != _petals.Length;
+	}
 
-        if (PetalCountChanged(wantedPetalCount))
-        {
-            UpdateVisiblePetals(wantedPetalCount);
-        }
-    }
+	private void UpdateVisiblePetals(int targetCount)
+	{
+		for (int i = 0; i < _petals.Length; i++)
+		{
+			var petalVisible = i < targetCount;
+			_petals[i].SetActive(petalVisible);
+		}
+	}
 
-    private bool PetalCountChanged(int wantedPetalCount)
-    {
-        return wantedPetalCount != _petals.Length;
-    }
+	private bool Alive()
+	{
+		return !Died();
+	}
 
-    private void UpdateVisiblePetals(int targetCount)
-    {
-        for (int i = 0; i < _petals.Length; i++)
-        {
-            var petalVisible = i < targetCount;
-            _petals[i].SetActive(petalVisible);
-        }
-    }
+	private bool Died()
+	{
+		return _timeToLive <= 0;
+	}
 
-    private bool Alive()
-    {
-        return !Died();
-    }
+	private void DieEvent()
+	{
+		_timeToLive = 0;
+		onDied?.Invoke();
+	}
 
-    private bool Died()
-    {
-        return _timeToLive <= 0;
-    }
-
-    private void DieEvent()
-    {
-        _timeToLive = 0;
-        onDied?.Invoke();
-    }
-
-    public void GiveEffect(FlowerEffects flowerEffect)
-    {
-        Debug.Log("Flower received the effect: " + flowerEffect);
-    }
+	public void GiveEffect(FlowerEffects flowerEffect)
+	{
+		Debug.Log("Flower received the effect: " + flowerEffect);
+	}
 }
