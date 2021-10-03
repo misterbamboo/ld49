@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 1143668050391033008}
   - component: {fileID: 7688470183579977076}
   - component: {fileID: 6676859058418311130}
+  - component: {fileID: 5720882872836406739}
   m_Layer: 0
   m_Name: ChemicalBeakerGlass
   m_TagString: PickableObject
@@ -414,8 +415,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigibbody: {fileID: 1245773227420397106}
-  _snappableObject: {fileID: 0}
-  _mixableObject: {fileID: 0}
+  _snappableObject: {fileID: 1143668050391033008}
+  _mixableObject: {fileID: 5720882872836406739}
 --- !u!114 &6676859058418311130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -429,7 +430,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _glassContent: {fileID: 4618794182685114955}
-  _max: 4
+  _max: 3.95
+--- !u!114 &5720882872836406739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2778613046994840478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1354a2e5bd1ac0940a477ad8188db162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4618794182685114955
 GameObject:
   m_ObjectHideFlags: 0

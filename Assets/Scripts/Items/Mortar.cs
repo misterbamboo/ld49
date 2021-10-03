@@ -60,9 +60,14 @@ public class Mortar : InstrumentBase
 
     public override bool AddChemicalItem(IChemicalItem chemical)
     {
-        filledIndicator.material.color = _chemicalMaterials.GetElementColor(chemical.ChemicalElement);
-        _elements.Add(chemical);
-        return true;
+        if (chemical.ChemicalStage == ChemicalStages.Raw)
+        {
+            filledIndicator.material.color = _chemicalMaterials.GetElementColor(chemical.ChemicalElement);
+            _elements.Add(chemical);
+            return true;
+        }
+
+        return false;
     }
 
     public override bool Use()
@@ -122,10 +127,26 @@ public class Mortar : InstrumentBase
             return null;
         }
 
+        var finishElements = UpgradeElementsToNextStage();
+        ResetMortarState();
+        return new InstrumentFinishedContent(finishElements, _instrumentFinishedPrefab);
+    }
+
+    private List<IChemicalItem> UpgradeElementsToNextStage()
+    {
         var finishElements = _elements;
+        foreach (var finishElement in finishElements)
+        {
+            finishElement.Init(finishElement.ChemicalElement, ChemicalStages.Powder);
+        }
+
+        return finishElements;
+    }
+
+    private void ResetMortarState()
+    {
         _elements = new List<IChemicalItem>();
         _isDone = false;
-        return new InstrumentFinishedContent(finishElements, _instrumentFinishedPrefab);
     }
 
     public override bool HasFinishedContent()

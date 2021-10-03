@@ -44,7 +44,7 @@ public class PickableObject : MonoBehaviour
             {
                 _mixableObject.Mix(this);
             }
-            else if (_snappableObject != null)
+            if (_snappableObject != null)
             {
                 _snappableObject.Snap();
             }

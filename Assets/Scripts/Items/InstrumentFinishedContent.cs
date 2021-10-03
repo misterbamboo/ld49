@@ -28,5 +28,10 @@ namespace Assets.Scripts.Items
         {
             return elements.Select(e => e.ChemicalElement).FirstOrDefault();
         }
+
+        public ChemicalStages GetChemicalStage()
+        {
+            return elements.Select(e => e.ChemicalStage).FirstOrDefault();
+        }
     }
 }

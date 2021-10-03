@@ -74,6 +74,9 @@ public class PlayerPickup : MonoBehaviour
 
         var pickableGO = Instantiate(content.GetPrefab());
 
+        var newStageChemicalItem = pickableGO.GetComponent<IChemicalItem>();
+        newStageChemicalItem.Init(content.GetChemicalElement(), content.GetChemicalStage());
+
         var renderer = pickableGO.GetComponent<MeshRenderer>();
         renderer.material.color = _chemicalMaterialsScriptableObject.GetElementColor(content.GetChemicalElement());
 

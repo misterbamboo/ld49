@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 5027204474057226498}
   - component: {fileID: 8433830249415130703}
   - component: {fileID: 2364033931414366123}
+  - component: {fileID: 6546037825886843545}
+  - component: {fileID: 7333432385479380902}
   m_Layer: 0
   m_Name: MortaredItem
   m_TagString: PickableObject
@@ -992,4 +994,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigibbody: {fileID: 8433830249415130703}
   _snappableObject: {fileID: 0}
-  _mixableObject: {fileID: 0}
+  _mixableObject: {fileID: 7333432385479380902}
+--- !u!114 &6546037825886843545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544325652144469654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568f4baba4699dc4b9ef3dc2783f1ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chemicalMixturePrefab: {fileID: 2191947189312931793, guid: 7fd6037158d7f5743972a033bdef9315, type: 3}
+  _chemicalElement: 0
+  _chemicalStage: 0
+--- !u!114 &7333432385479380902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544325652144469654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1354a2e5bd1ac0940a477ad8188db162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

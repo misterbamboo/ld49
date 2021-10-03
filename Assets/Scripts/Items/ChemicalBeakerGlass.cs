@@ -9,7 +9,7 @@ public class ChemicalBeakerGlass : MonoBehaviour
 
     [SerializeField] private GameObject _glassContent;
 
-    [SerializeField] private float _max = 4f;
+    [SerializeField] private float _max = 3.95f;
 
     private float _total;
 
@@ -65,6 +65,19 @@ public class ChemicalBeakerGlass : MonoBehaviour
         if (_total > _max)
         {
             _total = _max;
+            AddChemicalElement();
         }
+    }
+
+    private void AddChemicalElement()
+    {
+        var chemicalItem = GetComponent<IChemicalItem>();
+        if (chemicalItem != null)
+        {
+            return;
+        }
+
+        chemicalItem = gameObject.AddComponent<ChemicalItem>();
+        chemicalItem.Init(Assets.Chemicals.ChemicalElements.Blue, Assets.Chemicals.ChemicalStages.Raw);
     }
 }

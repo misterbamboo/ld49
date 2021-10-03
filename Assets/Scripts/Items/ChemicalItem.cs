@@ -6,7 +6,11 @@ using UnityEngine;
 
 public interface IChemicalItem
 {
-    public ChemicalElements ChemicalElement { get; }
+    ChemicalElements ChemicalElement { get; }
+
+    ChemicalStages ChemicalStage { get; }
+
+    void Init(ChemicalElements chemicalElement, ChemicalStages chemicalStage);
 
     void FlagAsAlreadyReact();
 
@@ -19,9 +23,13 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
 
     [SerializeField] private ChemicalElements _chemicalElement;
 
+    [SerializeField] private ChemicalStages _chemicalStage;
+
     private ChemicalElements _selectedElement;
 
     public ChemicalElements ChemicalElement => _selectedElement;
+
+    public ChemicalStages ChemicalStage => _chemicalStage;
 
     private bool _alreadyReact;
     public void FlagAsAlreadyReact()
@@ -35,6 +43,13 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
 
     private void Start()
     {
+        Init(_chemicalElement, _chemicalStage);
+    }
+
+    public void Init(ChemicalElements chemicalElement, ChemicalStages chemicalStage)
+    {
+        _chemicalElement = chemicalElement;
+        _chemicalStage = chemicalStage;
         DefineSelectedElement();
     }
 
@@ -60,6 +75,9 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
 
     private void OnCollisionEnter(Collision collision)
     {
+        return; // FOR NOW DONT REACT ON TOUCH
+
+        // TODO IMPLEMENT CONTACT REACTION
         if (collision.gameObject.TryGetComponent(out IChemicalItem otherChemical))
         {
             var currentChemical = GetComponent<IChemicalItem>();
