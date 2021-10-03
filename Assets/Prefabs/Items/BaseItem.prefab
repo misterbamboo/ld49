@@ -157,8 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568f4baba4699dc4b9ef3dc2783f1ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chemicalMaterialsScriptableObject: {fileID: 11400000, guid: 18d592a3830394944bbfdf7bd990f108, type: 2}
   _chemicalMixturePrefab: {fileID: 2191947189312931793, guid: 7fd6037158d7f5743972a033bdef9315, type: 3}
   _chemicalElement: 0
+  _chemicalStage: 0
 --- !u!114 &-6634561882985441191
 MonoBehaviour:
   m_ObjectHideFlags: 0

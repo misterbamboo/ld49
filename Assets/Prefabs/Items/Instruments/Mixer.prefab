@@ -174,13 +174,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f64eb6de5e1e35498c28d47608508da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _instrumentFinishedPrefab: {fileID: 0}
+  _instrumentFinishedPrefab: {fileID: 3086026456635591643, guid: 5aa29a03475068d40ba68f34fe928888, type: 3}
   InstrumentType: 2
   _chemicalMaterialsScriptableObject: {fileID: 11400000, guid: 18d592a3830394944bbfdf7bd990f108, type: 2}
   _structureSection: {fileID: 6503024323151898973}
   _topContent: {fileID: 1658069603634244334}
   _bottomContent: {fileID: 184683330258200824}
   _timeNeededToMix: 3
+  _overtimeMax: 6
 --- !u!65 &2701755278060132573
 BoxCollider:
   m_ObjectHideFlags: 0

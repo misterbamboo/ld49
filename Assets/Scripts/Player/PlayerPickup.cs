@@ -1,4 +1,5 @@
 using Assets.Chemicals;
+using Assets.Scripts.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -74,15 +75,36 @@ public class PlayerPickup : MonoBehaviour
 
         var pickableGO = Instantiate(content.GetPrefab());
 
-        var newStageChemicalItem = pickableGO.GetComponent<IChemicalItem>();
-        newStageChemicalItem.Init(content.GetChemicalElement(), content.GetChemicalStage());
-
-        var renderer = pickableGO.GetComponent<MeshRenderer>();
-        renderer.material.color = _chemicalMaterialsScriptableObject.GetElementColor(content.GetChemicalElement());
+        HandleSingleElement(content, pickableGO);
+        HandleMultipleElements(content, pickableGO);
 
         var pickable = pickableGO.GetComponent<PickableObject>();
         pickable.Pickup(_pickableObjectParent);
         _pickedUpObject = pickable;
+    }
+
+    private static void HandleSingleElement(InstrumentFinishedContent content, GameObject gameobject)
+    {
+        if (content.IsSingleElement())
+        {
+            var newStageChemicalItem = gameobject.GetComponent<IChemicalItem>();
+            if (newStageChemicalItem != null)
+            {
+                newStageChemicalItem.Init(content.GetFirstChemicalElement(), content.GetFirstChemicalStage());
+            }
+        }
+    }
+
+    private static void HandleMultipleElements(InstrumentFinishedContent content, GameObject gameobject)
+    {
+        if (content.IsMultipleElements())
+        {
+            var chemicalMixture = gameobject.GetComponent<IChemicalMixture>();
+            if (chemicalMixture != null)
+            {
+                chemicalMixture.React(content.GetFirstChemicalItem(), content.GetSecondChemicalItem());
+            }
+        }
     }
 
     private PickableObject FindClosestPickableObject()

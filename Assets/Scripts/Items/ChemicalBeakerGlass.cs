@@ -7,11 +7,11 @@ public class ChemicalBeakerGlass : MonoBehaviour
 {
     public const string Tag = "ChemicalBeakerGlass";
 
-    [SerializeField] private GameObject _glassContent;
+    [SerializeField] public GameObject glassContent;
 
     [SerializeField] private float _max = 3.95f;
 
-    private float _total;
+    [SerializeField] private float _value = 0;
 
     private Vector3 _initialGlassContentScale;
 
@@ -19,8 +19,8 @@ public class ChemicalBeakerGlass : MonoBehaviour
 
     private void Start()
     {
-        _initialGlassContentScale = _glassContent.transform.localScale;
-        _initialGlassOffsetYOffset = _glassContent.transform.localPosition.y - _initialGlassContentScale.y;
+        _initialGlassContentScale = glassContent.transform.localScale;
+        _initialGlassOffsetYOffset = glassContent.transform.localPosition.y - _initialGlassContentScale.y;
     }
 
     private void Update()
@@ -33,38 +33,38 @@ public class ChemicalBeakerGlass : MonoBehaviour
     {
         if (ShouldGlassContentChangeActiveState())
         {
-            _glassContent.SetActive(_total != 0);
+            glassContent.SetActive(_value != 0);
         }
     }
 
     private bool ShouldGlassContentChangeActiveState()
     {
-        bool isEmpty = _total == 0;
-        return isEmpty == _glassContent.activeInHierarchy;
+        bool isEmpty = _value == 0;
+        return isEmpty == glassContent.activeInHierarchy;
     }
 
     private void UpdateGlassContentScale()
     {
-        if (_glassContent.activeInHierarchy)
+        if (glassContent.activeInHierarchy)
         {
-            var newYScale = _initialGlassContentScale.y * _total / _max;
+            var newYScale = _initialGlassContentScale.y * _value / _max;
 
-            var localPos = _glassContent.transform.localPosition;
+            var localPos = glassContent.transform.localPosition;
             localPos.y = newYScale + _initialGlassOffsetYOffset;
-            _glassContent.transform.localPosition = localPos;
+            glassContent.transform.localPosition = localPos;
 
             var scale = _initialGlassContentScale;
             scale.y = newYScale;
-            _glassContent.transform.localScale = scale;
+            glassContent.transform.localScale = scale;
         }
     }
 
     public void Fill(float quantity)
     {
-        _total += quantity;
-        if (_total > _max)
+        _value += quantity;
+        if (_value > _max)
         {
-            _total = _max;
+            _value = _max;
             AddChemicalElement();
         }
     }

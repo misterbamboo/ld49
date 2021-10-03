@@ -19,6 +19,8 @@ public interface IChemicalItem
 
 public class ChemicalItem : MonoBehaviour, IChemicalItem
 {
+    [SerializeField] private ChemicalMaterialsScriptableObject _chemicalMaterialsScriptableObject;
+
     [SerializeField] private GameObject _chemicalMixturePrefab;
 
     [SerializeField] private ChemicalElements _chemicalElement;
@@ -51,6 +53,7 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
         _chemicalElement = chemicalElement;
         _chemicalStage = chemicalStage;
         DefineSelectedElement();
+        TryUpdateColor();
     }
 
     private void DefineSelectedElement()
@@ -65,68 +68,26 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
         }
     }
 
+    private void TryUpdateColor()
+    {
+        if (ObjectIsntDisposed())
+        {
+            var renderer = GetComponent<MeshRenderer>();
+            renderer.material.color = _chemicalMaterialsScriptableObject.GetElementColor(_selectedElement);
+        }
+    }
+
+    // The ChemicalItem reference is keep overtime (event if the GameObject have been deleted)
+    private bool ObjectIsntDisposed()
+    {
+        return this != null;
+    }
+
     private static ChemicalElements GetRandomElement()
     {
         var count = Enum.GetNames(typeof(ChemicalElements)).Length;
         var colorIndex = UnityEngine.Random.Range(1, count - 1);
         var element = (ChemicalElements)colorIndex;
         return element;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        return; // FOR NOW DONT REACT ON TOUCH
-
-        // TODO IMPLEMENT CONTACT REACTION
-        if (collision.gameObject.TryGetComponent(out IChemicalItem otherChemical))
-        {
-            var currentChemical = GetComponent<IChemicalItem>();
-            if (currentChemical.HasAlreadyReact() || otherChemical.HasAlreadyReact())
-            {
-                return;
-            }
-
-            if (React(currentChemical, otherChemical))
-            {
-                Destroy(collision.gameObject);
-                Destroy(gameObject);
-            }
-        }
-    }
-
-    private bool React(IChemicalItem firstChemical, IChemicalItem secondChemical)
-    {
-        var reaction = ChemicalMixes.Mix(firstChemical.ChemicalElement, secondChemical.ChemicalElement);
-        if (reaction == null)
-        {
-            Debug.LogWarning($"No reaction defined for chemical : {firstChemical} & {secondChemical}");
-            return false;
-        }
-
-        firstChemical.FlagAsAlreadyReact();
-        secondChemical.FlagAsAlreadyReact();
-
-        if (reaction.HasInstantEffect())
-        {
-
-        }
-        else
-        {
-            SpawChemicalMixture(reaction);
-        }
-        return true;
-    }
-
-    private void SpawChemicalMixture(IChemicalMixReaction reaction)
-    {
-        var mixtureItem = Instantiate(_chemicalMixturePrefab);
-        IChemicalMixture chemicalMixture;
-        if (!mixtureItem.TryGetComponent(out chemicalMixture))
-        {
-            Debug.LogError($"_chemicalMixturePrefab should have {nameof(IChemicalMixture)}");
-            return;
-        }
-        chemicalMixture.InitReaction(reaction);
-        mixtureItem.gameObject.transform.position = transform.position;
     }
 }

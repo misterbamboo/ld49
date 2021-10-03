@@ -185,11 +185,36 @@ public class Mixer : InstrumentBase
 
     public override InstrumentFinishedContent RemoveFinishedContent()
     {
-        return null;
+        var upgratedElements = UpgradeToNextStage();
+        ResetMixerState();
+        return new InstrumentFinishedContent(upgratedElements, _instrumentFinishedPrefab);
+    }
+
+    private List<IChemicalItem> UpgradeToNextStage()
+    {
+        var upgratedElements = _elements;
+        foreach (var element in _elements)
+        {
+            element.Init(element.ChemicalElement, ChemicalStages.Mixed);
+        }
+
+        return upgratedElements;
+    }
+
+    private void ResetMixerState()
+    {
+        _mixingTime = 0f;
+        _isMixing = false;
+        _isDone = false;
+        _isOvertime = false;
+        _elements = new List<IChemicalItem>();
+        _topContent.gameObject.SetActive(false);
+        _bottomContent.gameObject.SetActive(false);
+        _structureSection.rotation = _initialStructureSectionRotation;
     }
 
     public override bool HasFinishedContent()
     {
-        return false;
+        return _isDone;
     }
 }

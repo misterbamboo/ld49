@@ -24,14 +24,34 @@ namespace Assets.Scripts.Items
             return prefab;
         }
 
-        public ChemicalElements GetChemicalElement()
+        public ChemicalElements GetFirstChemicalElement()
         {
             return elements.Select(e => e.ChemicalElement).FirstOrDefault();
         }
 
-        public ChemicalStages GetChemicalStage()
+        public ChemicalStages GetFirstChemicalStage()
         {
             return elements.Select(e => e.ChemicalStage).FirstOrDefault();
+        }
+
+        public IChemicalItem GetFirstChemicalItem()
+        {
+            return elements.First();
+        }
+
+        public IChemicalItem GetSecondChemicalItem()
+        {
+            return elements.Skip(1).First();
+        }
+
+        public bool IsSingleElement()
+        {
+            return elements.Count() == 1;
+        }
+
+        public bool IsMultipleElements()
+        {
+            return elements.Count() > 1;
         }
     }
 }
