@@ -97,4 +97,37 @@ public class ChemicalItem : MonoBehaviour, IChemicalItem
         var element = (ChemicalElements)colorIndex;
         return element;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var otherChimical = other.gameObject.GetComponent<IChemicalItem>();
+        MakeChemicalReact(other.gameObject, otherChimical);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        var otherChimical = collision.gameObject.GetComponent<IChemicalItem>();
+        MakeChemicalReact(collision.gameObject, otherChimical);
+    }
+
+    private void MakeChemicalReact(GameObject otherGameObject, IChemicalItem otherChimical)
+    {
+        if (otherChimical == null)
+        {
+            return;
+        }
+
+        if (HasAlreadyReact() || otherChimical.HasAlreadyReact())
+        {
+            return;
+        }
+
+        var reaction = this.React(otherChimical);
+        if (reaction != null && reaction.HasInstantEffect())
+        {
+            ExplosionManager.ExploseAt(transform.position);
+            Destroy(gameObject);
+            Destroy(otherGameObject);
+        }
+    }
 }

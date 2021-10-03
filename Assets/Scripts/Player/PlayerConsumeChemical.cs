@@ -16,8 +16,6 @@ namespace Assets.Scripts.Player
 
         public void ToogleConsume()
         {
-            ExplosionManager.ExploseAt(transform.position);
-
             var pickedUpObject = _playerPickup.PickedUpObject;
             if (pickedUpObject == null)
             {

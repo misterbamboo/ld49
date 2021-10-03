@@ -46,4 +46,4 @@ MonoBehaviour:
   _playerController: {fileID: 0}
   ExplosionRadius: 8
   ExplosionForce: 500
-  UpwardsModifier: 200
+  UpwardsModifier: 100

@@ -127,20 +127,22 @@ public class Mortar : InstrumentBase
             return null;
         }
 
-        var finishElements = UpgradeElementsToNextStage();
+        var finishElements = CreateUpgradedElements();
         ResetMortarState();
         return new InstrumentFinishedContent(finishElements, _instrumentFinishedPrefab);
     }
 
-    private List<IChemicalItem> UpgradeElementsToNextStage()
+    private IEnumerable<ChimicalFinishedContent> CreateUpgradedElements()
     {
-        var finishElements = _elements;
-        foreach (var finishElement in finishElements)
+        var chimicalFinished = new List<ChimicalFinishedContent>();
+        foreach (var finishElement in _elements)
         {
-            finishElement.Init(finishElement.ChemicalElement, ChemicalStages.Powder);
+            var chemical = new ChimicalFinishedContent();
+            chemical.Init(finishElement.ChemicalElement, ChemicalStages.Powder);
+            chimicalFinished.Add(chemical);
         }
 
-        return finishElements;
+        return chimicalFinished;
     }
 
     private void ResetMortarState()

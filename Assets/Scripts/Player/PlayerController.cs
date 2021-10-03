@@ -76,7 +76,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.06f);
             var angle = Quaternion.Angle(transform.rotation, targetRotation);
-            print(angle);
             if (angle < 10)
             {
                 transform.rotation = targetRotation;

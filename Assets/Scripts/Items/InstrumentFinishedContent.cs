@@ -10,12 +10,12 @@ namespace Assets.Scripts.Items
 {
     public class InstrumentFinishedContent
     {
-        private IEnumerable<IChemicalItem> elements;
+        private List<IChemicalItem> elements;
         private GameObject prefab;
 
-        public InstrumentFinishedContent(IEnumerable<IChemicalItem> elements, GameObject prefab)
+        public InstrumentFinishedContent(IEnumerable<ChimicalFinishedContent> elements, GameObject prefab)
         {
-            this.elements = elements;
+            this.elements = elements.Cast<IChemicalItem>().ToList();
             this.prefab = prefab;
         }
 
@@ -52,6 +52,31 @@ namespace Assets.Scripts.Items
         public bool IsMultipleElements()
         {
             return elements.Count() > 1;
+        }
+    }
+
+    public class ChimicalFinishedContent : IChemicalItem
+    {
+        public ChemicalElements ChemicalElement { get; private set; }
+
+        public ChemicalStages ChemicalStage { get; private set; }
+
+        private bool _flag;
+
+        public void FlagAsAlreadyReact()
+        {
+            _flag = true;
+        }
+
+        public bool HasAlreadyReact()
+        {
+            return _flag;
+        }
+
+        public void Init(ChemicalElements chemicalElement, ChemicalStages chemicalStage)
+        {
+            ChemicalElement = chemicalElement;
+            ChemicalStage = chemicalStage;
         }
     }
 }

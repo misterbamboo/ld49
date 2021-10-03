@@ -206,15 +206,17 @@ public class Mixer : InstrumentBase
         return new InstrumentFinishedContent(upgratedElements, _instrumentFinishedPrefab);
     }
 
-    private List<IChemicalItem> UpgradeToNextStage()
+    private List<ChimicalFinishedContent> UpgradeToNextStage()
     {
-        var upgratedElements = _elements;
+        var mortaredElements = new List<ChimicalFinishedContent>();
         foreach (var element in _elements)
         {
-            element.Init(element.ChemicalElement, ChemicalStages.Mixed);
+            var mortaredElement = new ChimicalFinishedContent();
+            mortaredElement.Init(element.ChemicalElement, ChemicalStages.Mixed);
+            mortaredElements.Add(mortaredElement);
         }
 
-        return upgratedElements;
+        return mortaredElements;
     }
 
     private void ResetMixerState()
