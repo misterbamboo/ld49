@@ -71,10 +71,26 @@ public class Mixer : InstrumentBase
             UpdateContentColor(chemical);
 
             _elements.Add(chemical);
+            CheckChimicalRaction();
             return true;
         }
 
         return false;
+    }
+
+    private void CheckChimicalRaction()
+    {
+        if (_elements.Count > 1)
+        {
+            var first = _elements[0];
+            var second = _elements[1];
+            var reaction = first.React(second);
+            if (reaction.HasInstantEffect())
+            {
+                ResetMixerState();
+                ExplosionManager.ExploseAt(transform.position);
+            }
+        }
     }
 
     private void UpdateContentColor(IChemicalItem chemical)

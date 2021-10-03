@@ -106,7 +106,14 @@ public class PlayerPickup : MonoBehaviour
             var chemicalMixture = gameobject.GetComponent<IChemicalMixture>();
             if (chemicalMixture != null)
             {
-                chemicalMixture.React(content.GetFirstChemicalItem(), content.GetSecondChemicalItem());
+                var first = content.GetFirstChemicalItem();
+                var second = content.GetSecondChemicalItem();
+                var reaction = first.React(second);
+
+                // NOTE: Should already explode at this stage (if should explode)
+                // reaction.HasInstantEffect()
+
+                chemicalMixture.FillWithChemicalMixture(reaction);
             }
         }
     }

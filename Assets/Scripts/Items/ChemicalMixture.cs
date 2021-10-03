@@ -9,7 +9,7 @@ public interface IChemicalMixture
 {
     IChemicalMixReaction Reaction { get; }
 
-    bool React(IChemicalItem firstChemical, IChemicalItem secondChemical);
+    void FillWithChemicalMixture(IChemicalMixReaction reaction);
 }
 
 public class ChemicalMixture : MonoBehaviour, IChemicalMixture
@@ -20,36 +20,7 @@ public class ChemicalMixture : MonoBehaviour, IChemicalMixture
 
     public IChemicalMixReaction Reaction { get; private set; }
 
-    public bool React(IChemicalItem firstChemical, IChemicalItem secondChemical)
-    {
-        if (firstChemical.HasAlreadyReact() || secondChemical.HasAlreadyReact())
-        {
-            return false;
-        }
-
-        var reaction = ChemicalMixes.Mix(firstChemical.ChemicalElement, secondChemical.ChemicalElement);
-        if (reaction == null)
-        {
-            Debug.LogWarning($"No reaction defined for chemical : {firstChemical} & {secondChemical}");
-            return false;
-        }
-
-        firstChemical.FlagAsAlreadyReact();
-        secondChemical.FlagAsAlreadyReact();
-
-        if (reaction.HasInstantEffect())
-        {
-
-        }
-        else
-        {
-            PutMixtureInBeakerGlass(reaction);
-        }
-
-        return true;
-    }
-
-    private void PutMixtureInBeakerGlass(IChemicalMixReaction reaction)
+    public void FillWithChemicalMixture(IChemicalMixReaction reaction)
     {
         Reaction = reaction;
 

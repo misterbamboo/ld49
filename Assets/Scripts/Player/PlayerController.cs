@@ -1,6 +1,7 @@
 using Assets.Chemicals;
 using Assets.Scripts.Player;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -21,6 +22,66 @@ public class PlayerController : MonoBehaviour
     private Transform _cameraObject;
     private float _timeToLive;
 
+    private bool _isExplosionMode = false;
+    private Vector3 lastCheckExplosionMouvementPosition;
+
+    public void Explose()
+    {
+        if (_isExplosionMode)
+        {
+            return;
+        }
+
+        _isExplosionMode = true;
+        _rigidbody.constraints = RigidbodyConstraints.None;
+        StartCoroutine(CheckExplosionMouvement());
+    }
+
+    private IEnumerator CheckExplosionMouvement()
+    {
+        lastCheckExplosionMouvementPosition = transform.position;
+        bool stillMoving = true;
+        while (stillMoving)
+        {
+            yield return new WaitForSeconds(0.5f);
+            var previousPosition = lastCheckExplosionMouvementPosition;
+            lastCheckExplosionMouvementPosition = transform.position;
+
+            var distanceSinceLastCheck = (lastCheckExplosionMouvementPosition - previousPosition).magnitude;
+            if (distanceSinceLastCheck < 0.2)
+            {
+                stillMoving = false;
+            }
+        }
+
+        StartCoroutine(GetUpFromExplosion());
+    }
+
+    private IEnumerator GetUpFromExplosion()
+    {
+        _rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        var targetForward = -transform.up;
+        var targetRotation = Quaternion.LookRotation(targetForward);
+
+        bool continuerGetUp = true;
+        while (continuerGetUp)
+        {
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.1f);
+            var angle = Quaternion.Angle(transform.rotation , targetRotation);
+            print(angle);
+            if (angle < 10)
+            {
+                transform.rotation = targetRotation;
+                continuerGetUp = false;
+            }
+
+            yield return 0;
+        }
+
+        _isExplosionMode = false;
+    }
+
     private void Awake()
     {
         _cameraObject = Camera.main.transform;
@@ -33,8 +94,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
-        HandleRotation();
+        if (!_isExplosionMode)
+        {
+            HandleMovement();
+            HandleRotation();
+        }
 
         if (!IsDead)
         {
@@ -68,9 +132,9 @@ public class PlayerController : MonoBehaviour
         _moveDirection = _cameraObject.forward * _inputManager.VerticalInput;
         _moveDirection = _moveDirection + _cameraObject.right * _inputManager.HorizontalInput;
         _moveDirection.Normalize();
-        _moveDirection.y = 0;
         _moveDirection = _moveDirection * _movementSpeed;
 
+        _moveDirection.y = _rigidbody.velocity.y;
         _rigidbody.velocity = _moveDirection;
     }
 
