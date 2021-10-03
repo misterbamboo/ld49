@@ -40,7 +40,6 @@ public class MultipleTargetsCamera : MonoBehaviour
 
 	private void Zoom()
 	{
-
 		Vector3 centerPoint = GetCenterPoint();
 		if (IsCloseFromTarget(centerPoint))
 		{

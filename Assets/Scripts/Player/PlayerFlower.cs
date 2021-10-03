@@ -54,13 +54,17 @@ namespace Assets.Scripts.Player
             // Throw curve
             // https://www.desmos.com/calculator/qsqtxxqasl
             var transform = gameObject.transform;
+            var initialPos = transform.position;
 
             float timeUntilFinished = 1;
             while (timeUntilFinished > 0)
             {
                 timeUntilFinished -= Time.deltaTime;
+                var t = 1 - timeUntilFinished;
 
-                transform.localScale = Vector3.one * timeUntilFinished;
+                var newPos = Vector3.Lerp(initialPos, flowerPosition, t);
+                newPos.y = ThrowCurve(t);
+                transform.position = newPos;
 
                 yield return 0;
             }
