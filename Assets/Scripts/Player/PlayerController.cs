@@ -1,12 +1,13 @@
 using Assets.Chemicals;
 using Assets.Scripts.Player;
+using MoreMountains.Feedbacks;
 using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
 	public event Action onDied;
-	[SerializeField] private float _movementSpeed = 7f;
+	public float MovementSpeed = 7f;
 	[SerializeField] private float _rotationSpeed = 15f;
 	[SerializeField] private float _maxTimeToLive = 20f;
 	[SerializeField] private Rigidbody _rigidbody;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private PlayerFlower _playerFlower;
 	[SerializeField] private PlayerConsumeChemical _playerConsumeChemical;
 	[SerializeField] private PlayerEffectsController _playerEffectsController;
+	[SerializeField] private MMFeedbacks _scaleUpFeedback;
+	[SerializeField] private MMFeedbacks _scaleDownFeedback;
 
 	public bool InvertControls = false;
 
@@ -45,6 +48,16 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	public void ScaleUp()
+	{
+		_scaleUpFeedback.PlayFeedbacks();
+	}
+
+	public void ScaleDown()
+	{
+		_scaleDownFeedback.PlayFeedbacks();
+	}
+
 	private void CheckLife()
 	{
 		ReduceTimeToLive();
@@ -72,7 +85,7 @@ public class PlayerController : MonoBehaviour
 		_moveDirection = _moveDirection + _cameraObject.right * _inputManager.HorizontalInput;
 		_moveDirection.Normalize();
 		_moveDirection.y = 0;
-		_moveDirection = _moveDirection * _movementSpeed;
+		_moveDirection = _moveDirection * MovementSpeed;
 
 		_rigidbody.velocity = InvertControls ? -_moveDirection : _moveDirection;
 	}

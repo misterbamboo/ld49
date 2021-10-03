@@ -18,7 +18,9 @@ public class PlayerEffectFactory : MonoBehaviour
 			case PlayerEffects.InvertedControls:
 				return new InvertControlsPlayerEffect(this, player);
 			case PlayerEffects.TwiceTheSize:
-				break;
+				return new TwiceTheSizePlayerEffect(this, player);
+			case PlayerEffects.FasterSpeed:
+				return new FasterPlayerEffect(this, player);
 		}
 		return null;
 	}
